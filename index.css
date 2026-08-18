@@ -1184,6 +1184,9 @@ button {
     --text-body: #CBD5E1;
     --text-muted: #94A3B8;
     --border-color: #243048;
+    --bg-dark: #0F172A;
+    --bg-dark-surface: #1E293B;
+    --bg-dark-subtle: #334155;
     
     --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
@@ -1191,9 +1194,23 @@ button {
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7);
 }
 
+[data-theme="dark"] body {
+    background: var(--bg-page);
+    color: var(--text-body);
+}
+
 [data-theme="dark"] .site-header {
     background: rgba(19, 27, 46, 0.92);
     border-bottom-color: #243048;
+}
+
+[data-theme="dark"] .nav-link {
+    color: var(--text-muted);
+}
+
+[data-theme="dark"] .nav-link:hover,
+[data-theme="dark"] .nav-link.active {
+    color: #F8FAFC;
 }
 
 [data-theme="dark"] .btn-secondary {
@@ -1207,24 +1224,74 @@ button {
     border-color: var(--accent-orange);
 }
 
+[data-theme="dark"] .hero-section {
+    background: radial-gradient(circle at 85% 15%, rgba(247, 158, 27, 0.12) 0%, transparent 55%),
+                radial-gradient(circle at 15% 85%, rgba(235, 0, 27, 0.10) 0%, transparent 45%),
+                #090D16;
+}
+
+[data-theme="dark"] .hero-generator-card,
+[data-theme="dark"] .doc-portal-card,
+[data-theme="dark"] .faq-spotlight-wrapper,
+[data-theme="dark"] .stats-section,
+[data-theme="dark"] .faq-mini-item,
+[data-theme="dark"] .faq-mini-question,
+[data-theme="dark"] .faq-mini-answer {
+    background: var(--bg-surface);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .doc-portal-card h3,
+[data-theme="dark"] .faq-spotlight-header h3,
+[data-theme="dark"] .section-main-heading,
+[data-theme="dark"] .hero-title,
+[data-theme="dark"] .generator-controls-bar h4,
+[data-theme="dark"] .faq-mini-question,
+[data-theme="dark"] .faq-mini-answer,
+[data-theme="dark"] .stat-item h3,
+[data-theme="dark"] .doc-card-link,
+[data-theme="dark"] .nav-link,
+[data-theme="dark"] .brand-wrapper,
+[data-theme="dark"] .btn-link,
+[data-theme="dark"] .btn-copy {
+    color: var(--text-heading);
+}
+
+[data-theme="dark"] .hero-desc,
+[data-theme="dark"] .section-main-subtext,
+[data-theme="dark"] .doc-portal-card p,
+[data-theme="dark"] .faq-mini-answer,
+[data-theme="dark"] .stat-item p,
+[data-theme="dark"] .faq-highlight-text p,
+[data-theme="dark"] .btn-copy {
+    color: var(--text-body);
+}
+
+[data-theme="dark"] .faq-mini-question {
+    background: #1E293B;
+}
+
+[data-theme="dark"] .faq-mini-answer {
+    background: #131B2E;
+    border-top-color: #243048;
+}
+
 [data-theme="dark"] .stats-section {
     background: #131B2E;
     border-color: #243048;
 }
 
-[data-theme="dark"] .faq-mini-question {
-    background: #1E293B;
-    color: #F8FAFC;
-}
-
-[data-theme="dark"] .faq-mini-answer {
-    background: #131B2E;
-    color: #CBD5E1;
-    border-top-color: #243048;
-}
-
 [data-theme="dark"] .btn-copy {
     background: #1E293B;
-    color: #F8FAFC;
     border-color: #334155;
+}
+
+[data-theme="dark"] .btn-copy:hover {
+    background: #243048;
+}
+
+[data-theme="dark"] .btn-copy.copied {
+    background: #1F3A2D;
+    border-color: #4ADE80;
+    color: #DCFCE7;
 }
