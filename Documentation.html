@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Official Documentation for CC-GEN - Safe dummy credit card generation and payment gateway testing for developers.">
+    <title>CC-GEN Documentation | Test Card Generator & Testing Library</title>
+    <link rel="stylesheet" href="Documentation.css">
+</head>
+
+<body>
+
+    <!-- ==========================================================================
+         SITE HEADER & NAVIGATION
+         ========================================================================== -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="brand-wrapper" id="nav-brand">
+                <img src="Logo (1).JPG" alt="CC-GEN Logo" class="brand-logo-img" onerror="this.style.display='none'">
+                <span>CC-GEN</span>
+                <span class="brand-badge">Docs v2.0</span>
+            </a>
+
+            <nav class="main-nav" id="main-navigation">
+                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" href="cc-gen.html">Card Library</a>
+                <a class="nav-link active" href="Documentation.html">Documentation</a>
+                <a class="nav-link" href="faq.html">FAQs</a>
+            </nav>
+
+            <div class="auth-actions">
+                <a class="btn-link" href="sign in.html">Sign In</a>
+                <a class="btn-primary" href="sign up.html">Register</a>
+            </div>
+
+            <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="Toggle Navigation Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- ==========================================================================
+         HERO & INTERACTIVE PLAYGROUND
+         ========================================================================== -->
+    <main>
+        <section class="hero-section">
+            <div class="container">
+                <div class="hero-grid">
+                    
+                    <!-- Left Hero Content -->
+                    <div class="hero-left-column">
+                        <a href="javascript:history.back()" class="back-link" id="back-button">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="19" y1="12" x2="5" y2="12"></line>
+                                <polyline points="12 19 5 12 12 5"></polyline>
+                            </svg>
+                            Back
+                        </a>
+
+                        <div class="hero-tag">Developer Sandbox Tool</div>
+
+                        <h1 class="hero-title">
+                            Create & Test Beautifully Designed <span class="hero-title-accent">Credit Cards</span>
+                        </h1>
+
+                        <p class="hero-description">
+                            Our Credit Card Generator tool's primary purpose is for software testing, sandbox simulation, and data verification. Instead of using real credit cards, you can safely test checkout flows, payment APIs, and UI cards with zero risk of unauthorized charges.
+                        </p>
+
+                        <div class="hero-actions">
+                            <a href="cc-gen.html" class="btn-primary" id="try-tool-btn">
+                                <span>Try Generator</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </a>
+                            <a href="#test-data" class="btn-secondary">
+                                View Test Card Data
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Interactive Preview Box -->
+                    <div class="card-interactive-preview">
+                        <div class="preview-header">
+                            <h4>Interactive Card Preview</h4>
+                            <div class="card-type-tabs">
+                                <button class="tab-btn active" onclick="switchCardTheme('orange')">Business Orange</button>
+                                <button class="tab-btn" onclick="switchCardTheme('darkblue')">Enterprise Blue</button>
+                                <button class="tab-btn" onclick="switchCardTheme('purple')">Fintech Purple</button>
+                            </div>
+                        </div>
+
+                        <!-- Live Visual Card -->
+                        <div class="visual-credit-card card-theme-orange" id="live-credit-card">
+                            <div class="card-pattern-overlay"></div>
+                            <div class="card-glow-circle"></div>
+
+                            <div class="card-row-top">
+                                <div class="card-chip"></div>
+                                <div class="card-brand-logo" id="card-brand-name">Mastercard</div>
+                            </div>
+
+                            <div class="card-number-display" id="card-number-val">
+                                5425 2334 8920 4412
+                            </div>
+
+                            <div class="card-row-bottom">
+                                <div class="card-meta-group">
+                                    <span class="card-meta-label">Card Holder</span>
+                                    <span class="card-meta-val" id="card-holder-val">ALEXANDER D. MORGAN</span>
+                                </div>
+                                <div class="card-meta-group">
+                                    <span class="card-meta-label">Expires</span>
+                                    <span class="card-meta-val" id="card-exp-val">12/28</span>
+                                </div>
+                                <div class="card-meta-group">
+                                    <span class="card-meta-label">CVV</span>
+                                    <span class="card-meta-val card-meta-cvv" id="card-cvv-val">849</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="preview-controls">
+                            <div class="live-badge">
+                                <span class="live-dot"></span>
+                                <span>Luhn Algorithm Validated</span>
+                            </div>
+                            <button class="copy-btn" id="copy-card-btn" onclick="copyCardNumber()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <span id="copy-btn-text">Copy Number</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             FEATURES SECTION
+             ========================================================================== -->
+        <section class="doc-section" id="features">
+            <div class="container">
+                <div class="section-header-block">
+                    <span class="section-badge">Capabilities</span>
+                    <h2 class="section-title">Built for Modern Payment QA</h2>
+                    <p class="section-subtitle">Everything engineers, QA testers, and designers need to simulate card checkout workflows without real transactions.</p>
+                </div>
+
+                <div class="features-grid">
+                    <!-- Feature 1 -->
+                    <div class="feature-card">
+                        <div class="feature-icon-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                            </svg>
+                        </div>
+                        <h3>Bulk Card Generator</h3>
+                        <p>Generate thousands of valid test card combinations with customized BIN ranges, issuing networks, and exp dates in a single click.</p>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="feature-card">
+                        <div class="feature-icon-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                        </div>
+                        <h3>Instant Export Formats</h3>
+                        <p>Download generated card lists seamlessly in JSON, CSV, or XML format directly to integrate with automated CI/CD and Cypress test suites.</p>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="feature-card">
+                        <div class="feature-icon-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <h3>Custom Cardholder Names</h3>
+                        <p>Customize cardholder identities and billing addresses matching your test user personas or registered account data.</p>
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="feature-card">
+                        <div class="feature-icon-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                <line x1="1" y1="10" x2="23" y2="10"></line>
+                            </svg>
+                        </div>
+                        <h3>All Major Issuers</h3>
+                        <p>Full support for Visa, MasterCard, American Express, Discover, JCB, and UnionPay test formats with accurate prefix checking.</p>
+                    </div>
+
+                    <!-- Feature 5 -->
+                    <div class="feature-card">
+                        <div class="feature-icon-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                        </div>
+                        <h3>Gateway Sandbox Ready</h3>
+                        <p>Guaranteed compatibility with developer sandbox sandboxes including Stripe, PayPal, Braintree, Adyen, and Square.</p>
+                    </div>
+
+                    <!-- Feature 6 -->
+                    <div class="feature-card">
+                        <div class="feature-icon-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                        </div>
+                        <h3>Zero Financial Risk</h3>
+                        <p>Dummy numbers strictly pass mathematical format validations (Luhn MOD 10) without any real monetary backing or liability.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             TEST DATA QUICK REFERENCE TABLE
+             ========================================================================== -->
+        <section class="doc-section" id="test-data">
+            <div class="container">
+                <div class="section-header-block">
+                    <span class="section-badge">Reference Guide</span>
+                    <h2 class="section-title">Standard Test Card Numbers</h2>
+                    <p class="section-subtitle">Use these pre-validated card credentials in your development and staging environments.</p>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="test-data-table">
+                        <thead>
+                            <tr>
+                                <th>Card Network</th>
+                                <th>Test Card Number</th>
+                                <th>Exp Date</th>
+                                <th>CVV</th>
+                                <th>Test Gateway</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="table-brand-pill">
+                                        <strong>Visa</strong>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="code-pill">4242 4242 4242 4242</span>
+                                </td>
+                                <td>Any future date (e.g. 12/28)</td>
+                                <td><span class="code-pill">123</span></td>
+                                <td>Stripe, PayPal, Adyen</td>
+                                <td><span class="status-badge success">Passed (Luhn)</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="table-brand-pill">
+                                        <strong>Mastercard</strong>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="code-pill">5425 2334 8920 4412</span>
+                                </td>
+                                <td>Any future date (e.g. 08/29)</td>
+                                <td><span class="code-pill">849</span></td>
+                                <td>All Sandbox Gateways</td>
+                                <td><span class="status-badge success">Passed (Luhn)</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="table-brand-pill">
+                                        <strong>American Express</strong>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="code-pill">3782 822463 10005</span>
+                                </td>
+                                <td>Any future date (e.g. 05/27)</td>
+                                <td><span class="code-pill">1005</span> (4 digits)</td>
+                                <td>Stripe, Braintree</td>
+                                <td><span class="status-badge success">Passed (Luhn)</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="table-brand-pill">
+                                        <strong>Discover</strong>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="code-pill">6011 1111 1111 1117</span>
+                                </td>
+                                <td>Any future date (e.g. 09/30)</td>
+                                <td><span class="code-pill">567</span></td>
+                                <td>Discover Sandbox, PayPal</td>
+                                <td><span class="status-badge success">Passed (Luhn)</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="table-brand-pill">
+                                        <strong>3DS Authentication</strong>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="code-pill">4000 0027 6000 3184</span>
+                                </td>
+                                <td>Any future date</td>
+                                <td><span class="code-pill">318</span></td>
+                                <td>Stripe 3DS Challenge Flow</td>
+                                <td><span class="status-badge info">3DS Trigger</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Legal Disclaimer Alert -->
+                <div class="disclaimer-card">
+                    <div class="disclaimer-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                    </div>
+                    <div class="disclaimer-content">
+                        <h4>Security Notice & Legal Disclaimer</h4>
+                        <p>
+                            We at CC-GEN hold no responsibility to provide real or active credit card numbers. All card numbers generated or listed are purely simulated for educational and software engineering testing purposes. We strictly prohibit any fraudulent or illegal usage and actively cooperate with cybersecurity and law enforcement organizations.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             CODE SNIPPET & INTEGRATION
+             ========================================================================== -->
+        <section class="doc-section">
+            <div class="container">
+                <div class="section-header-block">
+                    <span class="section-badge">Integration</span>
+                    <h2 class="section-title">Automate Test Transactions</h2>
+                    <p class="section-subtitle">Quickly mock payment requests in your frontend and backend test suites.</p>
+                </div>
+
+                <div class="code-integration-box">
+                    <div class="code-tabs-bar">
+                        <div class="code-tabs-list">
+                            <button class="code-tab-btn active" id="tab-btn-js" onclick="selectCodeTab('js')">JavaScript (Fetch / Mock)</button>
+                            <button class="code-tab-btn" id="tab-btn-curl" onclick="selectCodeTab('curl')">cURL Example</button>
+                        </div>
+                        <button class="copy-btn" onclick="copyCodeSnippet()">Copy Code</button>
+                    </div>
+                    <div class="code-block-content" id="code-display">
+<pre><code><span class="code-comment">// Sample JavaScript test transaction using CC-GEN dummy card</span>
+<span class="code-keyword">const</span> testPaymentPayload = {
+    cardNumber: <span class="code-string">"5425233489204412"</span>,
+    expMonth: <span class="code-string">"12"</span>,
+    expYear: <span class="code-string">"2028"</span>,
+    cvv: <span class="code-string">"849"</span>,
+    amount: <span class="code-number">4999</span>, <span class="code-comment">// $49.99 USD in cents</span>
+    currency: <span class="code-string">"USD"</span>,
+    cardholder: <span class="code-string">"ALEXANDER D. MORGAN"</span>
+};
+
+<span class="code-keyword">async function</span> <span class="code-function">processSandboxPayment</span>(payload) {
+    <span class="code-keyword">const</span> response = <span class="code-keyword">await</span> <span class="code-function">fetch</span>(<span class="code-string">'/api/sandbox/checkout'</span>, {
+        method: <span class="code-string">'POST'</span>,
+        headers: { <span class="code-string">'Content-Type'</span>: <span class="code-string">'application/json'</span> },
+        body: JSON.<span class="code-function">stringify</span>(payload)
+    });
+    <span class="code-keyword">return await</span> response.<span class="code-function">json</span>();
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==========================================================================
+         FOOTER
+         ========================================================================== -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                
+                <div class="footer-brand-col">
+                    <div class="footer-brand-logo">
+                        <img class="footer-logo-img" src="Logo (1).JPG" alt="CC-GEN Logo" onerror="this.style.display='none'">
+                        <span>CC-GEN</span>
+                    </div>
+                    <p class="footer-desc">
+                        CC-GEN is a digital library of credit card designs and dummy card generation tools for designers, QA testers, and developers to safely build and verify payment workflows.
+                    </p>
+                    <div class="footer-social-links">
+                        <a href="#" class="social-btn" aria-label="Facebook">
+                            <img src="facebook.JPG" alt="FB" onerror="this.outerHTML='f'">
+                        </a>
+                        <a href="#" class="social-btn" aria-label="Twitter">
+                            <img src="twitter.JPG" alt="TW" onerror="this.outerHTML='t'">
+                        </a>
+                        <a href="#" class="social-btn" aria-label="Instagram">
+                            <img src="instagram.JPG" alt="IG" onerror="this.outerHTML='i'">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Navigation</h5>
+                    <ul class="footer-nav-list">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="cc-gen.html">Card Library</a></li>
+                        <li><a href="Documentation.html">Documentation</a></li>
+                        <li><a href="sign in.html">Sign In</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Resources</h5>
+                    <ul class="footer-nav-list">
+                        <li><a href="#test-data">Test Card Numbers</a></li>
+                        <li><a href="#features">Feature Guide</a></li>
+                        <li><a href="cc-gen.html">Bulk Generator</a></li>
+                        <li><a href="sign up.html">Register Account</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Legal & Safety</h5>
+                    <ul class="footer-nav-list">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Ethical Testing Policy</a></li>
+                        <li><a href="#">Contact Support</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 CC-GEN Library. All rights reserved.</p>
+                <p>Designed for testing & development purposes only.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========================================================================
+         PAGE INTERACTION SCRIPTS
+         ========================================================================== -->
+    <script>
+        // Interactive Card Themes & Mock Data
+        const cardThemes = {
+            orange: {
+                themeClass: 'card-theme-orange',
+                brand: 'Mastercard',
+                number: '5425 2334 8920 4412',
+                holder: 'ALEXANDER D. MORGAN',
+                exp: '12/28',
+                cvv: '849'
+            },
+            darkblue: {
+                themeClass: 'card-theme-darkblue',
+                brand: 'Visa Business',
+                number: '4242 8819 0192 3991',
+                holder: 'ELENA S. VANCE',
+                exp: '08/29',
+                cvv: '392'
+            },
+            purple: {
+                themeClass: 'card-theme-purple',
+                brand: 'Amex Platinum',
+                number: '3782 822463 10005',
+                holder: 'JULIAN K. CROSS',
+                exp: '05/27',
+                cvv: '1005'
+            }
+        };
+
+        let currentCardTheme = 'orange';
+
+        function switchCardTheme(themeKey) {
+            const cardData = cardThemes[themeKey];
+            if (!cardData) return;
+
+            currentCardTheme = themeKey;
+            const cardEl = document.getElementById('live-credit-card');
+            
+            // Remove previous theme classes
+            cardEl.classList.remove('card-theme-orange', 'card-theme-darkblue', 'card-theme-purple');
+            cardEl.classList.add(cardData.themeClass);
+
+            // Update content
+            document.getElementById('card-brand-name').textContent = cardData.brand;
+            document.getElementById('card-number-val').textContent = cardData.number;
+            document.getElementById('card-holder-val').textContent = cardData.holder;
+            document.getElementById('card-exp-val').textContent = cardData.exp;
+            document.getElementById('card-cvv-val').textContent = cardData.cvv;
+
+            // Update tab active state
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(themeKey) || 
+                   (themeKey === 'orange' && btn.textContent.includes('Orange')) ||
+                   (themeKey === 'darkblue' && btn.textContent.includes('Blue')) ||
+                   (themeKey === 'purple' && btn.textContent.includes('Purple'))) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Copy Card Number to Clipboard
+        function copyCardNumber() {
+            const numText = document.getElementById('card-number-val').textContent.replace(/\s+/g, '');
+            navigator.clipboard.writeText(numText).then(() => {
+                const btn = document.getElementById('copy-card-btn');
+                const textEl = document.getElementById('copy-btn-text');
+                btn.classList.add('copied');
+                textEl.textContent = 'Copied!';
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    textEl.textContent = 'Copy Number';
+                }, 2000);
+            }).catch(err => {
+                console.error('Copy failed', err);
+            });
+        }
+
+        // Code Snippet Tab Switcher
+        const codeSnippets = {
+            js: `<pre><code><span class="code-comment">// Sample JavaScript test transaction using CC-GEN dummy card</span>
+<span class="code-keyword">const</span> testPaymentPayload = {
+    cardNumber: <span class="code-string">"5425233489204412"</span>,
+    expMonth: <span class="code-string">"12"</span>,
+    expYear: <span class="code-string">"2028"</span>,
+    cvv: <span class="code-string">"849"</span>,
+    amount: <span class="code-number">4999</span>, <span class="code-comment">// $49.99 USD in cents</span>
+    currency: <span class="code-string">"USD"</span>,
+    cardholder: <span class="code-string">"ALEXANDER D. MORGAN"</span>
+};
+
+<span class="code-keyword">async function</span> <span class="code-function">processSandboxPayment</span>(payload) {
+    <span class="code-keyword">const</span> response = <span class="code-keyword">await</span> <span class="code-function">fetch</span>(<span class="code-string">'/api/sandbox/checkout'</span>, {
+        method: <span class="code-string">'POST'</span>,
+        headers: { <span class="code-string">'Content-Type'</span>: <span class="code-string">'application/json'</span> },
+        body: JSON.<span class="code-function">stringify</span>(payload)
+    });
+    <span class="code-keyword">return await</span> response.<span class="code-function">json</span>();
+}</code></pre>`,
+            curl: `<pre><code><span class="code-comment"># cURL Staging API Mock Request</span>
+curl -X POST https://api.sandbox.example.com/v1/charge \\
+  -H <span class="code-string">"Authorization: Bearer sk_test_ccgen_dummy_key"</span> \\
+  -H <span class="code-string">"Content-Type: application/json"</span> \\
+  -d '{
+    <span class="code-string">"card_number"</span>: <span class="code-string">"5425233489204412"</span>,
+    <span class="code-string">"exp_month"</span>: 12,
+    <span class="code-string">"exp_year"</span>: 2028,
+    <span class="code-string">"cvv"</span>: <span class="code-string">"849"</span>,
+    <span class="code-string">"amount"</span>: 4999
+  }'</code></pre>`
+        };
+
+        function selectCodeTab(tab) {
+            document.getElementById('code-display').innerHTML = codeSnippets[tab];
+            document.getElementById('tab-btn-js').classList.toggle('active', tab === 'js');
+            document.getElementById('tab-btn-curl').classList.toggle('active', tab === 'curl');
+        }
+
+        function copyCodeSnippet() {
+            const rawText = document.getElementById('code-display').innerText;
+            navigator.clipboard.writeText(rawText).then(() => {
+                alert('Code snippet copied to clipboard!');
+            });
+        }
+
+        // Mobile Menu Toggle
+        const toggleBtn = document.getElementById('mobile-toggle');
+        const mainNav = document.getElementById('main-navigation');
+        if (toggleBtn && mainNav) {
+            toggleBtn.addEventListener('click', () => {
+                mainNav.classList.toggle('mobile-open');
+            });
+        }
+    </script>
+</body>
+
+</html>

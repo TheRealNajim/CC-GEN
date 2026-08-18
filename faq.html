@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Frequently Asked Questions and Help Center for CC-GEN - Safe dummy card generator and payment sandbox testing.">
+    <title>Support & FAQ | CC-GEN Knowledge Base</title>
+    <link rel="stylesheet" href="faq.css">
+</head>
+
+<body>
+
+    <!-- ==========================================================================
+         SITE HEADER & NAVIGATION
+         ========================================================================== -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="brand-wrapper" id="nav-brand">
+                <img src="Logo (1).JPG" alt="CC-GEN Logo" class="brand-logo-img" onerror="this.src='IMG-20221207-WA0031 2.PNG'; this.onerror=null;">
+                <span>CC-GEN</span>
+                <span class="brand-badge">Help Center</span>
+            </a>
+
+            <nav class="main-nav" id="main-navigation">
+                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" href="cc-gen.html">Card Library</a>
+                <a class="nav-link" href="Documentation.html">Documentation</a>
+                <a class="nav-link active" href="faq.html">FAQs</a>
+            </nav>
+
+            <div class="auth-actions">
+                <a class="btn-link" href="sign in.html">Sign In</a>
+                <a class="btn-primary" href="sign up.html">Register</a>
+            </div>
+
+            <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="Toggle Navigation Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- ==========================================================================
+         HERO & LIVE SEARCH SECTION
+         ========================================================================== -->
+    <section class="faq-hero-section">
+        <div class="container">
+            <div class="faq-hero-tag">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                Knowledge Base & Support
+            </div>
+
+            <h1 class="faq-hero-title">How can we help you today?</h1>
+            <p class="faq-hero-subtitle">Find instant answers about dummy card generation, payment sandbox testing, billing, and developer APIs.</p>
+
+            <!-- Search Box -->
+            <div class="search-box-wrapper">
+                <div class="search-input-group">
+                    <div class="search-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </div>
+                    <input type="text" id="faq-search-input" class="search-input" placeholder="Search help articles (e.g. 'Stripe', 'cancel', 'Luhn', 'password')...">
+                    <button id="search-clear-btn" class="search-clear-btn" aria-label="Clear Search">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         CATEGORY FILTER TABS
+         ========================================================================== -->
+    <section class="category-filter-section">
+        <div class="container">
+            <div class="category-chips-list">
+                <button class="category-chip active" data-filter="all">All Topics</button>
+                <button class="category-chip" data-filter="generation">Card Generation</button>
+                <button class="category-chip" data-filter="security">Security & Sandbox</button>
+                <button class="category-chip" data-filter="account">Account & Billing</button>
+                <button class="category-chip" data-filter="api">API & Testing</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         FAQ ACCORDION SECTION
+         ========================================================================== -->
+    <main class="faq-main-section">
+        <div class="container">
+            
+            <div class="faq-section-header">
+                <h2>Frequently Asked Questions</h2>
+                <span class="faq-results-counter" id="faq-results-count">Showing 8 articles</span>
+            </div>
+
+            <div class="faq-list" id="faq-accordion-container">
+                
+                <!-- FAQ 1 -->
+                <div class="faq-item" data-category="generation">
+                    <button class="faq-question-btn">
+                        <div>
+                            <span class="faq-category-tag">Card Generation</span>
+                            <div class="faq-question-title">How can I generate cards for graphic design, UI mockups, and client demos?</div>
+                        </div>
+                        <div class="faq-icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer-collapse">
+                        <div class="faq-answer-content">
+                            <p>You can generate beautifully styled cards directly from the <a href="cc-gen.html" style="color: var(--primary-color); font-weight:600; text-decoration: underline;">Card Library</a> or generator tool. Choose your preferred card issuer (Visa, Mastercard, Amex), customize the cardholder's name, expiration date, and theme, then download the asset in high-resolution PNG or copy the visual CSS code snippet for web projects.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="faq-item" data-category="security">
+                    <button class="faq-question-btn">
+                        <div>
+                            <span class="faq-category-tag">Security & Sandbox</span>
+                            <div class="faq-question-title">Are CC-GEN test card numbers valid for real-world purchases?</div>
+                        </div>
+                        <div class="faq-icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer-collapse">
+                        <div class="faq-answer-content">
+                            <p><strong>No, absolutely not.</strong> All card numbers generated by CC-GEN are mathematically valid under the Luhn algorithm (MOD 10) for syntax validation only. They are not connected to any financial institution, have zero funds, and will be immediately rejected by live production payment gateways. They are strictly designed for development staging and sandbox environments.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="faq-item" data-category="api">
+                    <button class="faq-question-btn">
+                        <div>
+                            <span class="faq-category-tag">API & Testing</span>
+                            <div class="faq-question-title">How do I test payment gateways like Stripe, PayPal, or automated test suites?</div>
+                        </div>
+                        <div class="faq-icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer-collapse">
+                        <div class="faq-answer-content">
+                            <p>In your sandbox environment (e.g. Stripe Test Mode with <code>pk_test_...</code> keys), input any of our standard test card numbers. You can test various checkout scenarios including:</p>
+                            <ul>
+                                <li>Successful payment authorization (e.g. Visa <code>4242 4242 4242 4242</code>)</li>
+                                <li>3D Secure (3DS) authentication challenges</li>
+                                <li>Card declines and invalid expiration scenarios</li>
+                            </ul>
+                            <p>Visit the <a href="Documentation.html#test-data" style="color: var(--primary-color); font-weight:600; text-decoration: underline;">Test Card Data Table</a> in the Documentation for complete test matrix codes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="faq-item" data-category="account">
+                    <button class="faq-question-btn">
+                        <div>
+                            <span class="faq-category-tag">Account & Billing</span>
+                            <div class="faq-question-title">How do I cancel or modify my subscription?</div>
+                        </div>
+                        <div class="faq-icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer-collapse">
+                        <div class="faq-answer-content">
+                            <p>You can cancel or manage your subscription anytime without penalties:</p>
+                            <ol style="margin-left: 20px; margin-bottom: 12px;">
+                                <li>Sign in to your account from the top right menu.</li>
+                                <li>Navigate to <strong>Account Settings &rarr; Billing & Plans</strong>.</li>
+                                <li>Click <strong>Cancel Subscription</strong> or select a new tier.</li>
+                            </ol>
+                            <p>Your subscription features will remain active until the end of your current billing period.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="faq-item" data-category="account">
+                    <button class="faq-question-btn">
+                        <div>
+                            <span class="faq-category-tag">Account & Billing</span>
+                            <div class="faq-question-title">How can I reset or change my account password?</div>
+                        </div>
+                        <div class="faq-icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer-collapse">
+                        <div class="faq-answer-content">
+                            <p>To reset your password, visit the <a href="sign in.html" style="color: var(--primary-color); font-weight:600; text-decoration: underline;">Sign In page</a> and click <strong>"Forgot Password?"</strong>. Enter your registered email address to receive a secure password recovery link. If you are already logged in, you can change your password under <strong>Settings &rarr; Security</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 6 -->
+                <div class="faq-item" data-category="security">
+                    <button class="faq-question-btn">
+                        <div>
+                            <span class="faq-category-tag">Security & Sandbox</span>
+                            <div class="faq-question-title">How secure is my information and generated card data?</div>
+                        </div>
+                        <div class="faq-icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer-collapse">
+                        <div class="faq-answer-content">
+                            <p>We do not store or transmit sensitive financial credentials because CC-GEN only generates algorithmic dummy placeholders. All client communication is encrypted using TLS 1.3, and any mock project datasets you save to your workspace are isolated and protected by strict role-based access control.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 7 -->
+                <div class="faq-item" data-category="generation">
+                    <button class="faq-question-btn">
+                        <div>
+                            <span class="faq-category-tag">Card Generation</span>
+                            <div class="faq-question-title">If I delete a file or saved project, can I recover it?</div>
+                        </div>
+                        <div class="faq-icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer-collapse">
+                        <div class="faq-answer-content">
+                            <p>Deleted projects and card datasets are temporarily moved to your account's <strong>Trash / Archive</strong> folder for 30 days before permanent deletion. You can restore any deleted dataset during this window with a single click from your user dashboard.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 8 -->
+                <div class="faq-item" data-category="generation">
+                    <button class="faq-question-btn">
+                        <div>
+                            <span class="faq-category-tag">Card Generation</span>
+                            <div class="faq-question-title">What formats can I export my bulk generated card lists to?</div>
+                        </div>
+                        <div class="faq-icon-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer-collapse">
+                        <div class="faq-answer-content">
+                            <p>CC-GEN supports bulk exports in <strong>JSON</strong>, <strong>CSV</strong>, <strong>XML</strong>, and <strong>SQL Insert scripts</strong>. These can be imported directly into test fixtures, seed databases, or automated UI testing pipelines like Selenium, Playwright, or Postman.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Empty Search State -->
+            <div class="faq-empty-state" id="faq-empty-state">
+                <div class="faq-empty-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </div>
+                <h3>No help articles found</h3>
+                <p>We couldn't find any articles matching your search. Try different keywords or browse by topic category.</p>
+                <button class="btn-secondary" onclick="document.getElementById('search-clear-btn').click()">Clear Search Query</button>
+            </div>
+
+            <!-- Support CTA Box -->
+            <div class="support-cta-box" id="contact-support">
+                <div class="support-cta-text">
+                    <h3>Still have questions?</h3>
+                    <p>Can't find the answer you're looking for? Our developer support team is available 24/7 to assist with sandbox integration questions.</p>
+                </div>
+                <div class="support-cta-actions">
+                    <a href="mailto:support@ccgen.example.com" class="btn-light">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        <span>Contact Support</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ==========================================================================
+         FOOTER
+         ========================================================================== -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                
+                <div class="footer-brand-col">
+                    <div class="footer-brand-logo">
+                        <img class="footer-logo-img" src="Logo (1).JPG" alt="CC-GEN Logo" onerror="this.src='IMG-20221207-WA0031 2.PNG'; this.onerror=null;">
+                        <span>CC-GEN</span>
+                    </div>
+                    <p class="footer-desc">
+                        CC-GEN is an online digital library and dummy card generator empowering designers, QA engineers, and developers to safely build and verify payment applications.
+                    </p>
+                    <div class="footer-social-links">
+                        <a href="#" class="social-btn" aria-label="Facebook">
+                            <img src="facebook.JPG" alt="FB" onerror="this.outerHTML='f'">
+                        </a>
+                        <a href="#" class="social-btn" aria-label="Twitter">
+                            <img src="twitter.JPG" alt="TW" onerror="this.outerHTML='t'">
+                        </a>
+                        <a href="#" class="social-btn" aria-label="Instagram">
+                            <img src="instagram.JPG" alt="IG" onerror="this.outerHTML='i'">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Company</h5>
+                    <ul class="footer-nav-list">
+                        <li><a href="index.html">About Us</a></li>
+                        <li><a href="#contact-support">Contact Us</a></li>
+                        <li><a href="Documentation.html">Documentation</a></li>
+                        <li><a href="faq.html">FAQs</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Resources</h5>
+                    <ul class="footer-nav-list">
+                        <li><a href="Documentation.html#test-data">Test Card Numbers</a></li>
+                        <li><a href="cc-gen.html">Card Library</a></li>
+                        <li><a href="sign in.html">Sign In</a></li>
+                        <li><a href="sign up.html">Register</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Legal</h5>
+                    <ul class="footer-nav-list">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Security Overview</a></li>
+                        <li><a href="#">Sandbox Testing Policy</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 CC-GEN. All rights reserved.</p>
+                <p>Designed for testing & sandbox development purposes only.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript -->
+    <script src="project.js"></script>
+</body>
+
+</html>
