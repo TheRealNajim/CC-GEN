@@ -1164,8 +1164,23 @@ button {
         letter-spacing: 1.5px;
     }
 
+    .brand-wrapper {
+        font-size: 1.12rem;
+        gap: 8px;
+    }
+
     .brand-logo-img {
-        height: 32px;
+        height: 24px;
+        width: auto;
+    }
+
+    .brand-badge {
+        font-size: 0.65rem;
+        padding: 2px 6px;
+    }
+
+    .footer-logo-img {
+        height: 24px;
     }
 
     .stats-grid {
@@ -1334,4 +1349,9 @@ button {
     background: #1F3A2D;
     border-color: #4ADE80;
     color: #DCFCE7;
+}
+
+[data-theme="dark"] .faq-highlight-bar {
+    background: linear-gradient(135deg, #131B2E 0%, #1E293B 100%);
+    border: 1px solid #243048;
 }

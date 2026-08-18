@@ -835,8 +835,23 @@ button {
         padding: 28px 20px;
     }
 
+    .brand-wrapper {
+        font-size: 1.12rem;
+        gap: 8px;
+    }
+
     .brand-logo-img {
-        height: 32px;
+        height: 24px;
+        width: auto;
+    }
+
+    .brand-badge {
+        font-size: 0.65rem;
+        padding: 2px 6px;
+    }
+
+    .footer-logo-img {
+        height: 24px;
     }
 
     .footer-grid {
