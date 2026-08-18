@@ -1,0 +1,112 @@
+/* ==========================================================================
+   CC-GEN SMOOTH ANIMATIONS & MICRO-INTERACTIONS STYLESHEET
+   ========================================================================== */
+
+/* --- 1. Global Smooth Scrolling --- */
+html {
+    scroll-behavior: smooth !important;
+    scroll-padding-top: 90px;
+}
+
+/* --- 2. Material Click Ripple Effect --- */
+.ripple-wave {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: rippleEffect 0.48s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    pointer-events: none;
+    z-index: 10;
+}
+
+@keyframes rippleEffect {
+    0% {
+        transform: scale(0);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(2.8);
+        opacity: 0;
+    }
+}
+
+/* --- 3. Tactile Active Press & Hover Micro-Interactions --- */
+button,
+.btn-primary,
+.btn-secondary,
+.btn-link,
+.btn-social,
+.btn-light,
+.btn-white,
+.btn-copy,
+.theme-toggle-btn,
+.mobile-menu-toggle,
+.gallery-filter-btn,
+.category-chip,
+.theme-swatch,
+.faq-question-btn,
+.faq-mini-question,
+.doc-portal-card,
+.gallery-card-item {
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                background-color 0.2s ease,
+                border-color 0.2s ease,
+                color 0.2s ease !important;
+}
+
+button:active,
+.btn-primary:active,
+.btn-secondary:active,
+.btn-social:active,
+.btn-light:active,
+.btn-white:active,
+.btn-copy:active,
+.theme-toggle-btn:active,
+.mobile-menu-toggle:active,
+.gallery-filter-btn:active,
+.category-chip:active {
+    transform: scale(0.96) translateY(1px) !important;
+}
+
+.theme-swatch:active {
+    transform: scale(0.9) !important;
+}
+
+/* --- 4. Smooth Viewport Scroll-Reveal Animations --- */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.scroll-reveal.revealed {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* Staggered entrance delays for card grids */
+.doc-portal-grid .scroll-reveal:nth-child(1) { transition-delay: 0.05s; }
+.doc-portal-grid .scroll-reveal:nth-child(2) { transition-delay: 0.12s; }
+.doc-portal-grid .scroll-reveal:nth-child(3) { transition-delay: 0.19s; }
+.doc-portal-grid .scroll-reveal:nth-child(4) { transition-delay: 0.26s; }
+
+.stats-grid .scroll-reveal:nth-child(1) { transition-delay: 0.05s; }
+.stats-grid .scroll-reveal:nth-child(2) { transition-delay: 0.12s; }
+.stats-grid .scroll-reveal:nth-child(3) { transition-delay: 0.19s; }
+.stats-grid .scroll-reveal:nth-child(4) { transition-delay: 0.26s; }
+
+.card-gallery-grid .scroll-reveal:nth-child(1) { transition-delay: 0.05s; }
+.card-gallery-grid .scroll-reveal:nth-child(2) { transition-delay: 0.12s; }
+.card-gallery-grid .scroll-reveal:nth-child(3) { transition-delay: 0.19s; }
+.card-gallery-grid .scroll-reveal:nth-child(4) { transition-delay: 0.26s; }
+.card-gallery-grid .scroll-reveal:nth-child(5) { transition-delay: 0.33s; }
+.card-gallery-grid .scroll-reveal:nth-child(6) { transition-delay: 0.40s; }
+
+/* --- 5. Smooth Focus Rings --- */
+input:focus,
+select:focus,
+button:focus-visible {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
