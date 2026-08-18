@@ -787,12 +787,23 @@ button {
         font-size: 2.1rem;
     }
 
+    .auth-showcase-img {
+        max-height: 160px;
+        width: 100%;
+        object-fit: cover;
+        margin: 0 auto;
+    }
+
     .auth-card-wrapper {
-        padding: 32px 24px;
+        padding: 28px 20px;
     }
 
     .social-auth-grid {
         grid-template-columns: 1fr;
+    }
+
+    .brand-logo-img {
+        height: 32px;
     }
 
     .footer-grid {
@@ -805,4 +816,79 @@ button {
         gap: 12px;
         text-align: center;
     }
+}
+
+/* ==========================================================================
+   THEME TOGGLE BUTTON & DARK MODE OVERRIDES
+   ========================================================================== */
+.theme-toggle-btn {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    color: var(--text-heading);
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.theme-toggle-btn:hover {
+    background: var(--bg-surface);
+    color: var(--accent-orange);
+    transform: scale(1.05);
+}
+
+[data-theme="dark"] {
+    --bg-page: #090D16;
+    --bg-surface: #131B2E;
+    --bg-subtle: #1E293B;
+    --text-heading: #F8FAFC;
+    --text-body: #CBD5E1;
+    --text-muted: #94A3B8;
+    --border-color: #243048;
+    
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark"] .site-header {
+    background: rgba(19, 27, 46, 0.92);
+    border-bottom-color: #243048;
+}
+
+[data-theme="dark"] .btn-link {
+    color: #CBD5E1;
+}
+
+[data-theme="dark"] .btn-link:hover {
+    background: #1E293B;
+    color: #FFFFFF;
+}
+
+[data-theme="dark"] .form-input {
+    background: #090D16;
+    color: #F8FAFC;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .form-input:focus {
+    background: #131B2E;
+    border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .btn-social {
+    background: #1E293B;
+    color: #F8FAFC;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .btn-social:hover {
+    background: #243048;
+    border-color: #475569;
 }

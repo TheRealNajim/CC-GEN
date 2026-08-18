@@ -1059,12 +1059,22 @@ button {
     }
 
     .visual-credit-card {
-        padding: 20px;
+        padding: 18px 20px;
+        max-width: 100%;
     }
 
     .card-number-display {
-        font-size: 1.15rem;
-        letter-spacing: 2px;
+        font-size: 1.05rem;
+        letter-spacing: 1.5px;
+    }
+
+    .brand-logo-img {
+        height: 32px;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .footer-grid {
@@ -1077,4 +1087,99 @@ button {
         gap: 12px;
         text-align: center;
     }
+}
+
+/* ==========================================================================
+   THEME TOGGLE BUTTON & DARK MODE OVERRIDES
+   ========================================================================== */
+.theme-toggle-btn {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    color: var(--text-heading);
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.theme-toggle-btn:hover {
+    background: var(--bg-surface);
+    color: var(--accent-orange);
+    transform: scale(1.05);
+}
+
+[data-theme="dark"] {
+    --bg-page: #090D16;
+    --bg-surface: #131B2E;
+    --bg-subtle: #1E293B;
+    --text-heading: #F8FAFC;
+    --text-body: #CBD5E1;
+    --text-muted: #94A3B8;
+    --border-color: #243048;
+    
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark"] .site-header {
+    background: rgba(19, 27, 46, 0.92);
+    border-bottom-color: #243048;
+}
+
+[data-theme="dark"] .btn-secondary {
+    background: #1E293B;
+    color: #F8FAFC;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+    background: #243048;
+    border-color: var(--accent-orange);
+}
+
+[data-theme="dark"] .back-link {
+    background: #1E293B;
+    color: #CBD5E1;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .test-data-table th {
+    background: #1E293B;
+    color: #F8FAFC;
+    border-bottom-color: #334155;
+}
+
+[data-theme="dark"] .test-data-table td {
+    border-bottom-color: #243048;
+    color: #CBD5E1;
+}
+
+[data-theme="dark"] .test-data-table tr:hover td {
+    background: #1E293B;
+}
+
+[data-theme="dark"] .code-pill {
+    background: #090D16;
+    color: #F8FAFC;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .disclaimer-card {
+    background: #1C1917;
+    border-color: #78350F;
+}
+
+[data-theme="dark"] .disclaimer-content h4 {
+    color: #FBBF24;
+}
+
+[data-theme="dark"] .disclaimer-content p {
+    color: #FDE68A;
 }

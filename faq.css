@@ -858,6 +858,10 @@ button {
         padding: 0 20px 20px 20px;
     }
 
+    .brand-logo-img {
+        height: 32px;
+    }
+
     .footer-grid {
         grid-template-columns: 1fr;
         gap: 32px;
@@ -868,4 +872,102 @@ button {
         gap: 12px;
         text-align: center;
     }
+}
+
+/* ==========================================================================
+   THEME TOGGLE BUTTON & DARK MODE OVERRIDES
+   ========================================================================== */
+.theme-toggle-btn {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    color: var(--text-heading);
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.theme-toggle-btn:hover {
+    background: var(--bg-surface);
+    color: var(--accent-orange);
+    transform: scale(1.05);
+}
+
+[data-theme="dark"] {
+    --bg-page: #090D16;
+    --bg-surface: #131B2E;
+    --bg-subtle: #1E293B;
+    --text-heading: #F8FAFC;
+    --text-body: #CBD5E1;
+    --text-muted: #94A3B8;
+    --border-color: #243048;
+    
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark"] .site-header {
+    background: rgba(19, 27, 46, 0.92);
+    border-bottom-color: #243048;
+}
+
+[data-theme="dark"] .btn-secondary {
+    background: #1E293B;
+    color: #F8FAFC;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+    background: #243048;
+    border-color: var(--accent-orange);
+}
+
+[data-theme="dark"] .faq-search-box {
+    background: #131B2E;
+    border-color: #243048;
+}
+
+[data-theme="dark"] .search-input {
+    color: #F8FAFC;
+}
+
+[data-theme="dark"] .category-chip {
+    background: #131B2E;
+    color: #CBD5E1;
+    border-color: #243048;
+}
+
+[data-theme="dark"] .category-chip.active {
+    background: #F8FAFC;
+    color: #0F172A;
+    border-color: #F8FAFC;
+}
+
+[data-theme="dark"] .faq-item {
+    background: #131B2E;
+    border-color: #243048;
+}
+
+[data-theme="dark"] .faq-question-btn {
+    color: #F8FAFC;
+}
+
+[data-theme="dark"] .faq-question-btn:hover {
+    background: #1E293B;
+}
+
+[data-theme="dark"] .faq-icon-pill {
+    background: #1E293B;
+    color: #F8FAFC;
+}
+
+[data-theme="dark"] .faq-answer-content {
+    color: #CBD5E1;
 }
