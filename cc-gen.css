@@ -254,6 +254,35 @@ button {
     border-radius: var(--radius-full);
 }
 
+.header-right-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.desktop-auth-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mobile-nav-auth {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+}
+
+.mobile-nav-auth .btn-link,
+.mobile-nav-auth .btn-primary {
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+}
+
 .auth-actions {
     display: flex;
     align-items: center;
@@ -1068,8 +1097,16 @@ button {
 }
 
 @media (max-width: 768px) {
-    .main-nav, .auth-actions {
+    .main-nav {
         display: none;
+    }
+
+    .desktop-auth-actions, .auth-actions {
+        display: none;
+    }
+
+    .mobile-nav-auth {
+        display: flex;
     }
 
     .main-nav.mobile-open {
@@ -1084,18 +1121,63 @@ button {
         box-shadow: var(--shadow-xl);
         border-bottom: 1px solid var(--border-color);
         gap: 16px;
+        z-index: 999;
     }
 
     .mobile-menu-toggle {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .studio-title {
         font-size: 2.1rem;
     }
 
+    /* Customize Card Properties Mobile Improvements */
+    .studio-customizer-box {
+        padding: 20px 16px;
+        border-radius: var(--radius-lg);
+    }
+
     .form-group-row, .bulk-form-grid {
         grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .customizer-form-group {
+        margin-bottom: 12px;
+    }
+
+    .customizer-input, .customizer-select {
+        font-size: 16px; /* Prevents auto zoom */
+        padding: 12px 14px;
+        min-height: 46px;
+        box-sizing: border-box;
+    }
+
+    .theme-swatch-list {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 8px;
+        width: 100%;
+        margin-top: 6px;
+    }
+
+    .theme-swatch {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        height: auto;
+        max-width: 44px;
+    }
+
+    .customizer-actions-bar {
+        margin-top: 18px;
+    }
+
+    .customizer-actions-bar button {
+        padding: 13px 18px;
+        font-size: 0.95rem;
     }
 
     .card-3d-wrapper {
@@ -1114,6 +1196,22 @@ button {
 
     .brand-logo-img {
         height: 32px;
+    }
+
+    .gallery-filters-list {
+        display: flex;
+        overflow-x: auto;
+        width: 100%;
+        padding-bottom: 8px;
+        -webkit-overflow-scrolling: touch;
+        gap: 8px;
+    }
+
+    .gallery-filter-btn {
+        white-space: nowrap;
+        flex-shrink: 0;
+        padding: 8px 14px;
+        font-size: 0.88rem;
     }
 
     .footer-grid {

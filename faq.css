@@ -200,6 +200,35 @@ button {
     border-radius: var(--radius-full);
 }
 
+.header-right-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.desktop-auth-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mobile-nav-auth {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+}
+
+.mobile-nav-auth .btn-link,
+.mobile-nav-auth .btn-primary {
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+}
+
 .auth-actions {
     display: flex;
     align-items: center;
@@ -824,8 +853,16 @@ button {
 }
 
 @media (max-width: 768px) {
-    .main-nav, .auth-actions {
+    .main-nav {
         display: none;
+    }
+
+    .desktop-auth-actions, .auth-actions {
+        display: none;
+    }
+
+    .mobile-nav-auth {
+        display: flex;
     }
 
     .main-nav.mobile-open {
@@ -840,10 +877,13 @@ button {
         box-shadow: var(--shadow-xl);
         border-bottom: 1px solid var(--border-color);
         gap: 16px;
+        z-index: 999;
     }
 
     .mobile-menu-toggle {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .faq-hero-title {
