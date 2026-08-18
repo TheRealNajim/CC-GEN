@@ -57,6 +57,17 @@ html {
     font-size: 16px;
 }
 
+@keyframes pageFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 body {
     font-family: var(--font-main);
     background-color: var(--bg-page);
@@ -67,6 +78,13 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    animation: pageFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.page-leaving {
+    opacity: 0 !important;
+    transform: translateY(-8px) scale(0.995) !important;
 }
 
 img {
