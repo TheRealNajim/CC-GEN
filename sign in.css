@@ -414,13 +414,17 @@ button {
 }
 
 .auth-showcase-img {
-    margin-top: 12px;
+    margin-top: 14px;
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-    max-height: 240px;
+    box-shadow: var(--shadow-md);
+    max-height: 220px;
     width: 100%;
-    object-fit: cover;
+    height: auto;
+    object-fit: contain;
+    background: var(--bg-surface);
     border: 1px solid var(--border-color);
+    padding: 8px;
+    display: block;
 }
 
 /* Right Auth Card */
@@ -829,9 +833,13 @@ button {
 
     .auth-showcase-img {
         max-height: 160px;
+        max-width: 320px;
         width: 100%;
-        object-fit: cover;
-        margin: 0 auto;
+        height: auto;
+        object-fit: contain;
+        margin: 12px auto 0 auto;
+        display: block;
+        padding: 6px;
     }
 
     .auth-card-wrapper {
