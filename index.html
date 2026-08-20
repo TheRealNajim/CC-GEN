@@ -540,11 +540,49 @@
             });
         }
 
+        const randomFirstNames = [
+            'Alexander', 'Elena', 'Julian', 'Marcus', 'Sophia', 'Devon', 'Victoria', 'Liam', 'Nathan',
+            'Chloe', 'Dominic', 'Isabella', 'Gabriel', 'Charlotte', 'Sebastian', 'Amelia', 'Lucas',
+            'Olivia', 'Ethan', 'Harper', 'Benjamin', 'Mia', 'Daniel', 'Ava', 'Matthew', 'Emily',
+            'Samuel', 'Evelyn', 'Adrian', 'Scarlett', 'Mason', 'Grace', 'Logan', 'Hannah', 'Oliver'
+        ];
+        const randomMiddleInitials = ['A.', 'B.', 'C.', 'D.', 'E.', 'F.', 'G.', 'H.', 'J.', 'K.', 'L.', 'M.', 'N.', 'P.', 'R.', 'S.', 'T.', 'V.', 'W.'];
+        const randomLastNames = [
+            'Morgan', 'Vance', 'Cross', 'Sterling', 'Chen', 'Reese', 'Blake', 'Hayes', 'Drake',
+            'Carter', 'Tudor', 'Monroe', 'Kensington', 'Sinclair', 'Mercer', 'Vanguard', 'Blackwood',
+            'Winter', 'Montgomery', 'Ashford', 'Fairchild', 'Hawthorne', 'Ellington', 'Winslow', 'Somerset'
+        ];
+
+        function generateRandomCardholderName() {
+            const first = randomFirstNames[Math.floor(Math.random() * randomFirstNames.length)];
+            const mid = randomMiddleInitials[Math.floor(Math.random() * randomMiddleInitials.length)];
+            const last = randomLastNames[Math.floor(Math.random() * randomLastNames.length)];
+            return `${first} ${mid} ${last}`.toUpperCase();
+        }
+
+        function generateRandomCvv(network) {
+            if (network === 'amex') {
+                return String(Math.floor(1000 + Math.random() * 9000));
+            }
+            return String(Math.floor(100 + Math.random() * 900));
+        }
+
+        function generateLegitExpDate() {
+            const now = new Date();
+            const curYear2Digit = now.getFullYear() % 100; // e.g. 26
+            const futureYear = curYear2Digit + Math.floor(Math.random() * 5) + 1; // e.g. 27 to 31
+            const month = String(Math.floor(Math.random() * 12) + 1).padStart(2, '0');
+            return `${month}/${futureYear}`;
+        }
+
         function generateRandomCard() {
             const config = networkPresets[currentNetwork];
             const prefix = config.prefixes[Math.floor(Math.random() * config.prefixes.length)];
             const length = currentNetwork === 'amex' ? 15 : 16;
             document.getElementById('card-number-text').textContent = generateLuhnNumber(prefix, length);
+            document.getElementById('card-exp-date').textContent = generateLegitExpDate();
+            document.getElementById('card-holder-name').textContent = generateRandomCardholderName();
+            document.getElementById('card-cvv-text').textContent = generateRandomCvv(currentNetwork);
         }
 
         function copyHeroCardNumber() {
