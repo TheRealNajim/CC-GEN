@@ -1,0 +1,248 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 14px;
+}
+
+.v264_1501 {
+  width: 100%;
+  height: 1471px;
+  background: rgba(255, 255, 255, 1);
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+
+.name {
+  color: #fff;
+}
+
+.v460_4962 {
+  width: 100%;
+  height: 587px;
+  background: url("../images/v460_4962.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  margin: 145px;
+  opacity: 1;
+  position: absolute;
+  top: 223px;
+  left: 208px;
+  overflow: hidden;
+}
+
+.v460_4961 {
+  width: 456px;
+  height: 528px;
+  background: url("../images/v460_4961.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  margin: 40px;
+  opacity: 1;
+  position: absolute;
+  top: 29px;
+  left: 0px;
+  overflow: hidden;
+}
+
+.v460_4959 {
+  width: 456px;
+  height: 177px;
+  background: url("../images/v460_4959.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  margin: 24px;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+}
+
+.v401_4406 {
+  width: 456px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-family: Poppins;
+  font-weight: Bold;
+  font-size: 48px;
+  opacity: 1;
+  text-align: center;
+}
+
+.v460_4958 {
+  width: 456px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 96px;
+  left: 0px;
+  font-family: Poppins;
+  font-weight: Medium;
+  font-size: 18px;
+  opacity: 1;
+  text-align: left;
+}
+
+.v460_4960 {
+  width: 388px;
+  height: 311px;
+  background: url("../images/v460_4960.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 217px;
+  left: 0px;
+  overflow: hidden;
+}
+
+.v264_1505 {
+  width: 424px;
+  height: 587px;
+  background: url("../images/v264_1505.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  padding: 51px 37px;
+  margin: 47px;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 601px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  overflow: hidden;
+}
+
+.v460_4956 {
+  width: 350px;
+  height: 414px;
+  background: url("../images/v460_4956.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  margin: 19px;
+  opacity: 1;
+  position: absolute;
+  top: 51px;
+  left: 37px;
+  overflow: hidden;
+}
+
+.name {
+  color: #fff;
+}
+
+.name {
+  color: #fff;
+}
+
+.name {
+  color: #fff;
+}
+
+.v264_1509 {
+  width: 20px;
+  color: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 311px;
+  left: 165px;
+  font-family: Poppins;
+  font-weight: Regular;
+  font-size: 14px;
+  opacity: 1;
+  text-align: left;
+}
+
+.v460_4946 {
+  width: 350px;
+  height: 60px;
+  background: url("../images/v460_4946.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 354px;
+  left: 0px;
+  overflow: hidden;
+}
+
+.v460_4947 {
+  width: 350px;
+  height: 60px;
+  background: url("../images/v460_4947.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border: 1px solid rgba(51, 51, 51, 1);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  overflow: hidden;
+}
+
+.v460_4948 {
+  width: 178px;
+  height: 60px;
+  background: url("../images/v460_4948.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 86px;
+  overflow: hidden;
+}
+
+.name {
+  color: #fff;
+}
+
+.v460_4950 {
+  width: 140px;
+  color: rgba(51, 51, 51, 1);
+  position: absolute;
+  top: 0px;
+  left: 39px;
+  font-family: Poppins;
+  font-weight: Medium;
+  font-size: 14px;
+  opacity: 1;
+  text-align: center;
+}
+
+.v460_4957 {
+  width: 226px;
+  color: url("../images/v460_4957.png");
+  position: absolute;
+  top: 512px;
+  left: 99px;
+  font-family: Poppins;
+  font-weight: Regular;
+  font-size: 14px;
+  opacity: 1;
+  text-align: left;
+}
+
+.name {
+  color: #fff;
+}

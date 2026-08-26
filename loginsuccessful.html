@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration & Sign In Complete 🎉</title>
+    <link rel="icon" type="image/jpeg" href="Logo%20(1).JPG">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Login.css">
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="auth-card success-box">
+            <div class="success-icon-badge">
+                <div class="checkmark-icon">✓</div>
+            </div>
+            
+            <h1 class="success-title">Authentication Successful!</h1>
+            <p class="subtitle" id="userGreeting">Welcome back! You have successfully signed in.</p>
+
+            <div class="user-profile-badge" id="profileBadge" style="display: none;">
+                <div class="color-dot" id="userColorDot"></div>
+                <div class="user-info-text">
+                    <strong id="userName">User Name</strong>
+                    <span id="userEmail">user@example.com</span>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a href="Registration.html" class="btn-submit btn-secondary-auth">
+                    <span>➕ Register Another Account</span>
+                </a>
+                <a href="login.html" class="btn-submit" id="logoutBtn">
+                    <span>Sign Out 🚪</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fetch Current User from LocalStorage
+        const currentUser = JSON.parse(localStorage.getItem('current_user') || 'null');
+        const userGreeting = document.getElementById('userGreeting');
+        const profileBadge = document.getElementById('profileBadge');
+        const userName = document.getElementById('userName');
+        const userEmail = document.getElementById('userEmail');
+        const userColorDot = document.getElementById('userColorDot');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        if (currentUser) {
+            const fullName = `${currentUser.fname || ''} ${currentUser.lastname || ''}`.trim() || 'User';
+            userGreeting.textContent = `Welcome back, ${fullName}! Your session is now active.`;
+            
+            if (currentUser.email) {
+                profileBadge.style.display = 'flex';
+                userName.textContent = fullName;
+                userEmail.textContent = currentUser.email;
+                if (currentUser.color) {
+                    userColorDot.style.background = currentUser.color;
+                }
+            }
+        }
+
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('current_user');
+        });
+    </script>
+</body>
+</html>
