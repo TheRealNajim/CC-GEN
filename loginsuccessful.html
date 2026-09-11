@@ -3,70 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration & Sign In Complete 🎉</title>
+    <meta name="robots" content="noindex">
+    <meta name="description" content="Your CC-GEN authentication was successful.">
+    <title>Authentication Successful | CC-GEN</title>
     <link rel="icon" type="image/jpeg" href="Logo%20(1).JPG">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="Login.css">
+    <script src="theme.js"></script>
 </head>
 <body>
-    <div class="auth-wrapper">
-        <div class="auth-card success-box">
-            <div class="success-icon-badge">
-                <div class="checkmark-icon">✓</div>
-            </div>
-            
-            <h1 class="success-title">Authentication Successful!</h1>
-            <p class="subtitle" id="userGreeting">Welcome back! You have successfully signed in.</p>
 
-            <div class="user-profile-badge" id="profileBadge" style="display: none;">
-                <div class="color-dot" id="userColorDot"></div>
-                <div class="user-info-text">
-                    <strong id="userName">User Name</strong>
-                    <span id="userEmail">user@example.com</span>
+    <div class="auth-wrapper">
+        <div class="success-card">
+
+            <!-- Floating theme toggle (wired automatically by theme.js) -->
+            <button type="button" class="theme-toggle-btn" aria-label="Toggle Dark/Light Theme"></button>
+
+            <div class="success-icon-badge">
+                <div class="checkmark-icon">&#10003;</div>
+            </div>
+
+            <h1 class="success-title">Authentication Successful!</h1>
+            <p class="subtitle" id="userGreeting">Restoring your secure session&hellip;</p>
+
+            <!-- Session loading state -->
+            <div class="session-loading" id="sessionLoading">
+                <div class="spinner" role="status" aria-label="Loading session"></div>
+                <p>Verifying your sign-in&hellip;</p>
+            </div>
+
+            <!-- Signed-in profile (populated from /api/auth/session) -->
+            <div id="profileSection" style="display: none;">
+                <div class="user-profile-badge">
+                    <img class="user-avatar" id="userAvatar" src="" alt="Account avatar" style="display: none;">
+                    <div class="user-avatar" id="userAvatarFallback" style="display: none;">?</div>
+                    <div class="user-info-text">
+                        <strong id="userName">User Name</strong>
+                        <span id="userEmail">user@example.com</span>
+                    </div>
+                </div>
+
+                <div class="provider-chip" id="providerChip">
+                    <span id="providerIcon"></span>
+                    <span id="providerLabel">Signed in</span>
                 </div>
             </div>
 
-            <div class="action-buttons">
-                <a href="Registration.html" class="btn-submit btn-secondary-auth">
-                    <span>➕ Register Another Account</span>
+            <div class="action-buttons single" id="actionButtons">
+                <a href="cc-gen.html" class="btn-submit" id="primaryAction">
+                    <span>Enter Card Studio</span>
                 </a>
-                <a href="login.html" class="btn-submit" id="logoutBtn">
-                    <span>Sign Out 🚪</span>
+                <a href="/api/auth/logout" class="btn-submit btn-secondary-auth" id="logoutBtn">
+                    <span>Sign Out</span>
                 </a>
             </div>
+
         </div>
     </div>
 
     <script>
-        // Fetch Current User from LocalStorage
-        const currentUser = JSON.parse(localStorage.getItem('current_user') || 'null');
-        const userGreeting = document.getElementById('userGreeting');
-        const profileBadge = document.getElementById('profileBadge');
-        const userName = document.getElementById('userName');
-        const userEmail = document.getElementById('userEmail');
-        const userColorDot = document.getElementById('userColorDot');
-        const logoutBtn = document.getElementById('logoutBtn');
+        // The legacy simulated auth flow stored a fake user in localStorage.
+        // The real OAuth flow uses a signed HttpOnly cookie instead.
+        localStorage.removeItem('current_user');
 
-        if (currentUser) {
-            const fullName = `${currentUser.fname || ''} ${currentUser.lastname || ''}`.trim() || 'User';
-            userGreeting.textContent = `Welcome back, ${fullName}! Your session is now active.`;
-            
-            if (currentUser.email) {
-                profileBadge.style.display = 'flex';
-                userName.textContent = fullName;
-                userEmail.textContent = currentUser.email;
-                if (currentUser.color) {
-                    userColorDot.style.background = currentUser.color;
-                }
-            }
+        const GOOGLE_ICON = '<svg viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09C3.26 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.98-3.09z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.98 3.09C6.22 6.86 8.87 4.75 12 4.75z"/></svg>';
+        const GITHUB_ICON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>';
+
+        const el = (id) => document.getElementById(id);
+        const greeting = el('userGreeting');
+        const loading = el('sessionLoading');
+        const profileSection = el('profileSection');
+        const avatar = el('userAvatar');
+        const avatarFallback = el('userAvatarFallback');
+        const userName = el('userName');
+        const userEmail = el('userEmail');
+        const providerChip = el('providerChip');
+        const providerIcon = el('providerIcon');
+        const providerLabel = el('providerLabel');
+        const primaryAction = el('primaryAction');
+        const logoutBtn = el('logoutBtn');
+
+        function initialsOf(name) {
+            return String(name || 'U')
+                .trim()
+                .split(/\s+/)
+                .slice(0, 2)
+                .map((word) => word.charAt(0).toUpperCase())
+                .join('') || '?';
         }
 
-        logoutBtn.addEventListener('click', () => {
-            localStorage.removeItem('current_user');
-        });
+        function renderSignedIn(user) {
+            loading.style.display = 'none';
+            profileSection.style.display = 'block';
+
+            const fullName = user.name || 'CC-GEN User';
+            greeting.textContent = `Welcome, ${fullName}! Your session is now active.`;
+
+            userName.textContent = fullName;
+            userEmail.textContent = user.email || 'Email address hidden';
+
+            if (user.avatar) {
+                avatar.src = user.avatar;
+                avatar.onerror = () => {
+                    avatar.style.display = 'none';
+                    avatarFallback.textContent = initialsOf(fullName);
+                    avatarFallback.style.display = 'flex';
+                };
+                avatar.style.display = 'block';
+            } else {
+                avatarFallback.textContent = initialsOf(fullName);
+                avatarFallback.style.display = 'flex';
+            }
+
+            const isGoogle = user.provider === 'google';
+            providerIcon.innerHTML = isGoogle ? GOOGLE_ICON : GITHUB_ICON;
+            providerLabel.textContent = isGoogle ? 'Signed in with Google' : 'Signed in with GitHub';
+        }
+
+        function renderSignedOut(title, message) {
+            loading.style.display = 'none';
+            document.querySelector('.success-icon-badge').innerHTML = '<div class="checkmark-icon">!</div>';
+            document.querySelector('.success-title').textContent = title;
+            greeting.textContent = message;
+            primaryAction.href = 'sign in.html';
+            primaryAction.querySelector('span').textContent = 'Go To Sign In';
+            logoutBtn.style.display = 'none';
+            document.getElementById('actionButtons').classList.add('single');
+        }
+
+        fetch('/api/auth/session', { credentials: 'same-origin' })
+            .then((res) => {
+                if (!res.ok) throw new Error('Session request failed');
+                return res.json();
+            })
+            .then((data) => {
+                if (data && data.authenticated && data.user) {
+                    renderSignedIn(data.user);
+                } else {
+                    renderSignedOut(
+                        'No Active Session',
+                        'We could not find an active login session. Please sign in or register to continue.'
+                    );
+                }
+            })
+            .catch(() => {
+                renderSignedOut(
+                    'Session Error',
+                    'We could not verify your session right now. Please go back and try signing in again.'
+                );
+            });
     </script>
 </body>
 </html>

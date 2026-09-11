@@ -1,0 +1,364 @@
+/* ==========================================================================
+   CC-GEN LOGIN SUCCESS — OAUTH SESSION LANDING PAGE
+   Displayed after a successful Google / GitHub sign-in or sign-up.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --primary-gradient: linear-gradient(135deg, #EB001B 0%, #F79E1B 100%);
+    --primary-gradient-hover: linear-gradient(135deg, #d30018 0%, #e08b12 100%);
+    --primary-color: #EB001B;
+    --accent-orange: #F79E1B;
+
+    --bg-page: #F8FAFC;
+    --bg-surface: #FFFFFF;
+    --bg-subtle: #F1F5F9;
+    --bg-dark: #0F172A;
+    --bg-dark-surface: #1E293B;
+
+    --text-heading: #0F172A;
+    --text-body: #334155;
+    --text-muted: #64748B;
+    --text-light: #F8FAFC;
+
+    --border-color: #E2E8F0;
+
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    --shadow-glow: 0 10px 30px -5px rgba(235, 0, 27, 0.25);
+
+    --radius-full: 9999px;
+
+    --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="dark"] {
+    --bg-page: #0F172A;
+    --bg-surface: #1E293B;
+    --bg-subtle: #334155;
+    --text-heading: #F8FAFC;
+    --text-body: #CBD5E1;
+    --text-muted: #94A3B8;
+    --border-color: #334155;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-main);
+    background: var(--bg-page);
+    color: var(--text-body);
+    line-height: 1.65;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    -webkit-font-smoothing: antialiased;
+    animation: pageRiseIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes pageRiseIn {
+    0% { opacity: 0; transform: translateY(14px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes checkPop {
+    0% { transform: scale(0.4); opacity: 0; }
+    60% { transform: scale(1.12); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ------------------------------------------------------------------
+   Layout
+   ------------------------------------------------------------------ */
+
+.auth-wrapper {
+    width: 100%;
+    max-width: 480px;
+}
+
+.success-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    box-shadow: var(--shadow-xl);
+    padding: 48px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.success-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: var(--primary-gradient);
+}
+
+/* ------------------------------------------------------------------
+   Success badge
+   ------------------------------------------------------------------ */
+
+.success-icon-badge {
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 24px;
+    border-radius: var(--radius-full);
+    background: var(--primary-gradient);
+    box-shadow: var(--shadow-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: checkPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+.checkmark-icon {
+    color: #FFFFFF;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* ------------------------------------------------------------------
+   Typography
+   ------------------------------------------------------------------ */
+
+.success-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--text-heading);
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+}
+
+/* ------------------------------------------------------------------
+   Profile badge
+   ------------------------------------------------------------------ */
+
+.user-profile-badge {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+}
+
+.user-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid var(--bg-surface);
+    box-shadow: var(--shadow-lg);
+    background: var(--primary-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.user-info-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.user-info-text strong {
+    font-size: 16px;
+    color: var(--text-heading);
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-info-text span {
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Provider chip (Google / GitHub) */
+
+.provider-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 auto 30px;
+    padding: 8px 18px;
+    border-radius: var(--radius-full);
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-body);
+}
+
+.provider-chip svg,
+.provider-chip img {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+/* ------------------------------------------------------------------
+   Loading skeleton
+   ------------------------------------------------------------------ */
+
+.session-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 0 8px;
+}
+
+.spinner {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-full);
+    border: 4px solid var(--bg-subtle);
+    border-top-color: var(--primary-color);
+    animation: spin 0.8s linear infinite;
+}
+
+.session-loading p {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+/* ------------------------------------------------------------------
+   Action buttons
+   ------------------------------------------------------------------ */
+
+.action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 26px;
+}
+
+.action-buttons.single {
+    grid-template-columns: 1fr;
+}
+
+.btn-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 22px;
+    border-radius: 14px;
+    font-family: var(--font-main);
+    font-size: 14.5px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    background: var(--primary-gradient);
+    color: #FFFFFF;
+    box-shadow: var(--shadow-glow);
+    transition: transform var(--transition-base), box-shadow var(--transition-base), background var(--transition-base);
+}
+
+.btn-submit:hover {
+    background: var(--primary-gradient-hover);
+    transform: translateY(-2px);
+}
+
+.btn-secondary-auth {
+    background: transparent;
+    color: var(--text-body);
+    border: 1px solid var(--border-color);
+    box-shadow: none;
+}
+
+.btn-secondary-auth:hover {
+    background: var(--bg-subtle);
+    transform: translateY(-2px);
+    box-shadow: none;
+}
+
+/* ------------------------------------------------------------------
+   Theme toggle (floating, matches site behaviour via theme.js)
+   ------------------------------------------------------------------ */
+
+.theme-toggle-btn {
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-color);
+    background: var(--bg-surface);
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--transition-base), border-color var(--transition-base);
+}
+
+.theme-toggle-btn:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* ------------------------------------------------------------------
+   Responsive
+   ------------------------------------------------------------------ */
+
+@media (max-width: 480px) {
+    .success-card {
+        padding: 38px 24px;
+    }
+
+    .success-title {
+        font-size: 22px;
+    }
+
+    .action-buttons {
+        grid-template-columns: 1fr;
+    }
+}

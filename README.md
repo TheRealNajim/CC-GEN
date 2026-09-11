@@ -24,6 +24,64 @@ In modern payment engineering and UI/UX design, testing payment workflows with r
 | **Support & FAQ Center** | [`faq.html`](faq.html) | Searchable help desk with real-time keyword filtering, category filter pills, smooth animated accordions, and a 24/7 support contact banner. |
 | **Sign In Portal** | [`sign in.html`](sign%20in.html) | Modern authentication interface with split-view security trust badges, show/hide password toggle, remember-me persistence, and Google/GitHub OAuth shortcuts. |
 | **Register Account** | [`sign up.html`](sign%20up.html) | Free developer onboarding page featuring password match validation, terms consent, and instant account creation simulation. |
+| **Auth Success Landing** | [`loginsuccessful.html`](loginsuccessful.html) | Session-aware landing page shown after a real Google/GitHub sign-in. Displays the signed-in profile (avatar, name, email, provider) and a working Sign Out action. |
+
+---
+
+## 🔐 OAuth Sign-In (Google & GitHub)
+
+Social sign-in/sign-up runs through **Vercel serverless functions** in the [`api/`](api/) directory — no backend framework or database is required. The flow is a standard OAuth 2.0 authorization-code handshake with CSRF state validation and an HMAC-SHA256 signed, HttpOnly session cookie.
+
+| Route | Purpose |
+| :--- | :--- |
+| `GET /api/auth/google` | Starts Google OAuth (redirects to Google consent screen) |
+| `GET /api/auth/github` | Starts GitHub OAuth (redirects to GitHub authorize screen) |
+| `GET /api/auth/callback/google` | Google callback: exchanges the code, creates the session cookie |
+| `GET /api/auth/callback/github` | GitHub callback: exchanges the code, creates the session cookie |
+| `GET /api/auth/session` | Returns `{ authenticated, user }` for the current session |
+| `GET /api/auth/logout` | Clears the session cookie and returns to the sign-in page |
+
+### 1. Create the OAuth credentials
+
+**Google** — [Google Cloud Console](https://console.cloud.google.com/apis/credentials) → *Create Credentials* → *OAuth client ID* → *Web application*:
+- Authorized redirect URI: `https://cc-gen-seven.vercel.app/api/auth/callback/google`
+- (For local testing also add: `http://localhost:3000/api/auth/callback/google`)
+
+**GitHub** — [GitHub Developer Settings](https://github.com/settings/developers) → *OAuth Apps* → *New OAuth App*:
+- Authorization callback URL: `https://cc-gen-seven.vercel.app/api/auth/callback/github`
+- (For local testing also add: `http://localhost:3000/api/auth/callback/github`)
+
+### 2. Set the environment variables in Vercel
+
+Project → *Settings* → *Environment Variables*:
+
+| Variable | Value |
+| :--- | :--- |
+| `GOOGLE_CLIENT_ID` | From the Google OAuth client |
+| `GOOGLE_CLIENT_SECRET` | From the Google OAuth client |
+| `GITHUB_CLIENT_ID` | From the GitHub OAuth App |
+| `GITHUB_CLIENT_SECRET` | From the GitHub OAuth App |
+| `AUTH_SECRET` | Any long random string used to sign session cookies |
+
+Generate an `AUTH_SECRET` locally with:
+
+```bash
+# macOS / Linux
+openssl rand -hex 32
+
+# Windows (PowerShell)
+-join ((1..64) | ForEach-Object { '{0:x}' -f (Get-Random -Max 16) })
+```
+
+Then **redeploy the project**. Until the variables are set, the social buttons will show a friendly setup page explaining exactly what is missing.
+
+### 3. Run locally
+
+```bash
+npm i -g vercel
+vercel          # link the project (pulls env vars)
+vercel dev      # serve the site + /api functions at http://localhost:3000
+```
 
 ---
 

@@ -1,0 +1,22 @@
+# Environment & secrets — never commit these
+.env
+.env.*
+!.env.example
+
+# Vercel CLI project link
+.vercel
+
+# Dependencies
+node_modules/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
+
+.vercel
+.env*
