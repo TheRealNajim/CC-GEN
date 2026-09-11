@@ -48,6 +48,7 @@
                 <a class="nav-link active" href="cc-gen.html">Card Library</a>
                 <a class="nav-link" href="Documentation.html">Documentation</a>
                 <a class="nav-link" href="faq.html">FAQs</a>
+                <a class="nav-link" href="pricing.html">Pricing</a>
                 <div class="mobile-nav-auth">
                     <a class="btn-link" href="sign in.html">Sign In</a>
                     <a class="btn-primary" href="sign up.html">Register Free</a>
@@ -406,18 +407,18 @@
             <div class="container">
                 <div class="bulk-box-wrapper">
                     <div class="bulk-header-row">
-                        <h2>Bulk Test Card Generator & Exporter</h2>
-                        <p>Generate batches of mathematically valid dummy cards and instantly download test fixtures.</p>
+                        <h2>Bulk Test Card Generator &amp; Exporter <span class="pro-badge-chip" id="bulkProBadge" style="display: none;">PRO</span></h2>
+                        <p>Generate batches of mathematically valid dummy cards and instantly download test fixtures. Free plan covers batches up to 10 cards — <a href="pricing.html" style="color: var(--primary-color); font-weight: 600;">Pro</a> unlocks 500.</p>
                     </div>
 
                     <div class="bulk-form-grid">
                         <div class="bulk-form-control">
                             <label for="bulk-qty">Card Quantity</label>
                             <select id="bulk-qty" class="bulk-input-field">
-                                <option value="10">10 Cards (Quick Batch)</option>
-                                <option value="50" selected>50 Cards (Standard Test)</option>
-                                <option value="100">100 Cards (CI/CD Suite)</option>
-                                <option value="500">500 Cards (Stress Testing)</option>
+                                <option value="10">10 Cards (Free Batch)</option>
+                                <option value="50" selected>50 Cards (Standard Test) — PRO</option>
+                                <option value="100">100 Cards (CI/CD Suite) — PRO</option>
+                                <option value="500">500 Cards (Stress Testing) — PRO</option>
                             </select>
                         </div>
 
@@ -463,6 +464,32 @@
         </section>
 
     </main>
+
+    <!-- ==========================================================================
+         MODAL: PRO UPSELL (BULK EXPORTS > 10 CARDS)
+         ========================================================================== -->
+    <div class="modal-backdrop" id="pro-modal" onclick="if(event.target===this) closeProUpsell()">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h4>CC-GEN Pro Required</h4>
+                <button class="modal-close-btn" onclick="closeProUpsell()">&times;</button>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <div style="width: 64px; height: 64px; margin: 0 auto 16px; border-radius: 9999px; background: var(--primary-gradient); display: flex; align-items: center; justify-content: center; color: #fff;">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                </div>
+                <p style="font-size: 0.95rem; color: var(--text-body); margin-bottom: 6px;"><strong>Bulk exports above 10 cards</strong> are part of CC-GEN Pro.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 18px;">Unlock batches of up to 500 Luhn-validated cards with JSON, CSV, XML &amp; SQL exports — starting at $3/month, cancel anytime.</p>
+                <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+                    <button class="btn-secondary" onclick="closeProUpsell()">Not Now</button>
+                    <a href="pricing.html" class="btn-primary" style="padding: 12px 24px; text-decoration: none;">See Pro Plans</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- ==========================================================================
          MODAL: EXPORT CSS SNIPPET
@@ -862,41 +889,95 @@
         }
 
         // Bulk Generator & Exporter File Creator
-        function generateAndDownloadBulk() {
-            const qty = parseInt(document.getElementById('bulk-qty').value, 10);
-            const brand = document.getElementById('bulk-brand').value;
-            const format = document.getElementById('bulk-format').value;
-            const persona = document.getElementById('bulk-persona').value || 'USER';
+        // Quantities above 10 are generated by the Pro-gated serverless
+        // endpoint (/api/bulk-generate), which verifies the subscription
+        // against Stripe server-side. Up to 10 stays free & client-side.
+        const FREE_BULK_LIMIT = 10;
+        let isProUser = false;
 
-            const cards = [];
+        function checkProStatus() {
+            fetch('/api/billing/status', { credentials: 'same-origin' })
+                .then((res) => (res.ok ? res.json() : null))
+                .then((data) => {
+                    isProUser = Boolean(data && data.pro);
+                    const badge = document.getElementById('bulkProBadge');
+                    if (badge) badge.style.display = isProUser ? 'inline-block' : 'none';
+                })
+                .catch(() => {});
+        }
+        checkProStatus();
+
+        function openProUpsell() {
+            document.getElementById('pro-modal').style.display = 'flex';
+        }
+
+        function closeProUpsell() {
+            document.getElementById('pro-modal').style.display = 'none';
+        }
+
+        function buildCardObject(i, chosenBrand, persona) {
             const prefixes = {
                 visa: ['4242', '4532', '4916'],
                 mastercard: ['5105', '5425', '5555'],
                 amex: ['3782', '3714'],
                 discover: ['6011']
             };
+            const prefixList = prefixes[chosenBrand] || ['4242'];
+            const prefix = prefixList[Math.floor(Math.random() * prefixList.length)];
+            const len = chosenBrand === 'amex' ? 15 : 16;
+            const rawNum = generateLuhnNumber(prefix, len).replace(/\s+/g, '');
+            return {
+                id: i,
+                cardholder: `${persona}_${i}`,
+                network: chosenBrand.toUpperCase(),
+                cardNumber: rawNum,
+                expMonth: String(Math.floor(1 + Math.random() * 12)).padStart(2, '0'),
+                expYear: String(2027 + Math.floor(Math.random() * 5)),
+                cvv: chosenBrand === 'amex' ? '1005' : String(Math.floor(100 + Math.random() * 900)),
+                luhnValid: true
+            };
+        }
 
+        function generateClientSide(qty, brand, persona) {
+            const cards = [];
             for (let i = 1; i <= qty; i++) {
                 let chosenBrand = brand;
                 if (brand === 'mixed') {
                     const keys = ['visa', 'mastercard', 'amex', 'discover'];
                     chosenBrand = keys[Math.floor(Math.random() * keys.length)];
                 }
-                const prefixList = prefixes[chosenBrand] || ['4242'];
-                const prefix = prefixList[Math.floor(Math.random() * prefixList.length)];
-                const len = chosenBrand === 'amex' ? 15 : 16;
-                const rawNum = generateLuhnNumber(prefix, len).replace(/\s+/g, '');
-                
-                cards.push({
-                    id: i,
-                    cardholder: `${persona}_${i}`,
-                    network: chosenBrand.toUpperCase(),
-                    cardNumber: rawNum,
-                    expMonth: String(Math.floor(1 + Math.random() * 12)).padStart(2, '0'),
-                    expYear: String(2027 + Math.floor(Math.random() * 5)),
-                    cvv: chosenBrand === 'amex' ? '1005' : String(Math.floor(100 + Math.random() * 900)),
-                    luhnValid: true
-                });
+                cards.push(buildCardObject(i, chosenBrand, persona));
+            }
+            return cards;
+        }
+
+        async function fetchProCards(qty, brand, persona) {
+            const params = new URLSearchParams({ count: String(qty), brand, persona });
+            const res = await fetch(`/api/bulk-generate?${params}`, { credentials: 'same-origin' });
+            if (res.ok) {
+                const data = await res.json();
+                return data.cards;
+            }
+            if (res.status === 402) {
+                openProUpsell();
+                return null;
+            }
+            alert('The bulk generator service is temporarily unavailable. Please try again in a moment.');
+            return null;
+        }
+
+        async function generateAndDownloadBulk() {
+            const qty = parseInt(document.getElementById('bulk-qty').value, 10);
+            const brand = document.getElementById('bulk-brand').value;
+            const format = document.getElementById('bulk-format').value;
+            const persona = document.getElementById('bulk-persona').value || 'USER';
+
+            let cards;
+            if (qty > FREE_BULK_LIMIT) {
+                cards = await fetchProCards(qty, brand, persona);
+                if (!cards) return; // Upsell shown or fetch failed.
+            } else {
+                cards = generateClientSide(qty, brand, persona);
             }
 
             let fileContent = '';

@@ -85,6 +85,54 @@ vercel dev      # serve the site + /api functions at http://localhost:3000
 
 ---
 
+## 💳 CC-GEN Pro — Stripe Subscriptions
+
+Paid plans run through **Stripe Checkout** (hosted payment page) with serverless functions in [`api/billing/`](api/billing/). No database is required: the Pro state lives in a second HMAC-signed, HttpOnly cookie that carries the Stripe customer + subscription IDs, and every gated action re-verifies the subscription against Stripe's API server-side (fail-closed).
+
+| Route | Purpose |
+| :--- | :--- |
+| `GET /api/billing/checkout?plan=monthly\|yearly` | Starts a Stripe Checkout subscription session (requires sign-in) |
+| `GET /api/billing/verify?session_id=…` | Stripe success redirect: verifies payment, issues the Pro cookie |
+| `GET /api/billing/status` | Live subscription status; refreshes or revokes the Pro cookie |
+| `GET /api/billing/portal` | Sends the subscriber to the Stripe customer portal (cancel / update card) |
+| `GET /api/bulk-generate?count=&brand=&persona=` | **Pro-gated** bulk generator for 11–500 card fixtures |
+
+**Pro perks** (enforced server-side in `api/bulk-generate.js`):
+- Bulk exports above the free 10-card limit, up to 500 cards per batch
+- Pro badge on the account UI
+
+**Pricing**: Pro Monthly **$3.00/mo** · Pro Yearly **$30.00/yr** (17% off)
+
+### 1. Create the product & prices in Stripe
+
+Stripe dashboard → *Products* → *Add product*:
+- Name: **CC-GEN Pro** (recurring)
+- Price 1: **$3.00 USD / month** → copy its `price_...` ID
+- Price 2: **$30.00 USD / year** → copy its `price_...` ID
+
+Also enable the customer portal (needed for cancel/manage links):
+*Settings* → *Billing* → *Customer portal* → activate with the default configuration.
+
+### 2. Set the environment variables in Vercel
+
+| Variable | Value |
+| :--- | :--- |
+| `STRIPE_SECRET_KEY` | `sk_live_...` (or `sk_test_...` while testing) |
+| `STRIPE_PRICE_MONTHLY` | `price_...` ID of the $3.00/mo price |
+| `STRIPE_PRICE_YEARLY` | `price_...` ID of the $30.00/yr price |
+
+Then redeploy. Until these are set, `/pricing.html` buttons show a friendly setup page.
+
+### 3. Test the whole flow
+
+Switch to **test mode** keys, then use Stripe's test cards on the hosted checkout (fitting, for a card-sandbox site):
+- `4242 4242 4242 4242` — succeeds
+- `4000 0000 0000 0341` — fails subscription payment
+
+Subscriptions can be cancelled any time from *Manage Subscription* (Stripe customer portal), which revokes Pro on the next `/api/billing/status` check.
+
+---
+
 ## 🛠️ Technology Stack & Design System
 
 - **Structure**: Semantic HTML5 with accessibility attributes (`aria-label`, `<main>`, `<header>`, `<footer>`, `<aside>`, `<nav>`).

@@ -9,8 +9,10 @@ const crypto = require('crypto');
 
 const SESSION_COOKIE = 'ccgen_session';
 const STATE_COOKIE = 'ccgen_oauth_state';
+const PRO_COOKIE = 'ccgen_pro';
 const SESSION_TTL_SECONDS = 60 * 60 * 24 * 7; // 7 days
 const STATE_TTL_SECONDS = 600; // 10 minutes
+const PRO_TTL_SECONDS = 60 * 60 * 24 * 30; // 30 days
 
 /* ------------------------------------------------------------------ */
 /* Environment                                                         */
@@ -90,27 +92,17 @@ function newState() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Signed session tokens (HMAC-SHA256)                                 */
+/* Signed tokens (HMAC-SHA256)                                         */
 /* ------------------------------------------------------------------ */
 
-function signSession(user) {
+function signPayload(payload) {
     const secret = getAuthSecret();
-    const now = Math.floor(Date.now() / 1000);
-    const payload = {
-        provider: user.provider,
-        id: String(user.id || ''),
-        name: user.name || 'CC-GEN User',
-        email: user.email || null,
-        avatar: user.avatar || null,
-        iat: now,
-        exp: now + SESSION_TTL_SECONDS
-    };
     const body = Buffer.from(JSON.stringify(payload)).toString('base64url');
     const sig = crypto.createHmac('sha256', secret).update(body).digest('base64url');
     return `${body}.${sig}`;
 }
 
-function verifySessionToken(token) {
+function verifyToken(token, expectedTyp) {
     if (!token || typeof token !== 'string' || token.indexOf('.') === -1) return null;
     const secret = getAuthSecret();
     if (!secret) return null;
@@ -125,7 +117,8 @@ function verifySessionToken(token) {
 
     try {
         const payload = JSON.parse(Buffer.from(body, 'base64url').toString('utf8'));
-        if (!payload || typeof payload.exp !== 'number' || payload.exp < Math.floor(Date.now() / 1000)) {
+        if (!payload || payload.typ !== expectedTyp) return null;
+        if (typeof payload.exp !== 'number' || payload.exp < Math.floor(Date.now() / 1000)) {
             return null;
         }
         return payload;
@@ -134,9 +127,49 @@ function verifySessionToken(token) {
     }
 }
 
+function signSession(user) {
+    const now = Math.floor(Date.now() / 1000);
+    return signPayload({
+        typ: 'session',
+        provider: user.provider,
+        id: String(user.id || ''),
+        name: user.name || 'CC-GEN User',
+        email: user.email || null,
+        avatar: user.avatar || null,
+        iat: now,
+        exp: now + SESSION_TTL_SECONDS
+    });
+}
+
+function verifySessionToken(token) {
+    return verifyToken(token, 'session');
+}
+
+function signProToken(pro) {
+    const now = Math.floor(Date.now() / 1000);
+    return signPayload({
+        typ: 'pro',
+        customerId: pro.customerId,
+        subscriptionId: pro.subscriptionId,
+        plan: pro.plan === 'yearly' ? 'yearly' : 'monthly',
+        email: pro.email || null,
+        iat: now,
+        exp: now + PRO_TTL_SECONDS
+    });
+}
+
+function verifyProToken(token) {
+    return verifyToken(token, 'pro');
+}
+
 function getSessionFromRequest(req) {
     const jar = parseCookies(req);
     return verifySessionToken(jar[SESSION_COOKIE]);
+}
+
+function getProFromRequest(req) {
+    const jar = parseCookies(req);
+    return verifyProToken(jar[PRO_COOKIE]);
 }
 
 /* ------------------------------------------------------------------ */
@@ -246,8 +279,10 @@ code {
 module.exports = {
     SESSION_COOKIE,
     STATE_COOKIE,
+    PRO_COOKIE,
     SESSION_TTL_SECONDS,
     STATE_TTL_SECONDS,
+    PRO_TTL_SECONDS,
     parseCookies,
     cookieString,
     expiredCookie,
@@ -255,7 +290,10 @@ module.exports = {
     newState,
     signSession,
     verifySessionToken,
+    signProToken,
+    verifyProToken,
     getSessionFromRequest,
+    getProFromRequest,
     redirect,
     escapeHtml,
     errorPage

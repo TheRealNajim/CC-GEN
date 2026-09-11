@@ -50,11 +50,22 @@
                     <span id="providerIcon"></span>
                     <span id="providerLabel">Signed in</span>
                 </div>
+
+                <div class="provider-chip pro-chip" id="proChip" style="display: none;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 5.9 6.3.5-4.8 4.1 1.5 6.1L12 15.2l-5.4 3.4 1.5-6.1L3.3 8.4l6.3-.5L12 2z"/></svg>
+                    <span>CC-GEN Pro</span>
+                </div>
             </div>
 
-            <div class="action-buttons single" id="actionButtons">
+            <div class="action-buttons" id="actionButtons">
                 <a href="cc-gen.html" class="btn-submit" id="primaryAction">
                     <span>Enter Card Studio</span>
+                </a>
+                <a href="/api/billing/portal" class="btn-submit btn-secondary-auth" id="manageBillingBtn" style="display: none;">
+                    <span>Manage Subscription</span>
+                </a>
+                <a href="pricing.html" class="btn-submit btn-secondary-auth" id="upgradeBtn" style="display: none;">
+                    <span>Upgrade to Pro</span>
                 </a>
                 <a href="/api/auth/logout" class="btn-submit btn-secondary-auth" id="logoutBtn">
                     <span>Sign Out</span>
@@ -121,6 +132,21 @@
             const isGoogle = user.provider === 'google';
             providerIcon.innerHTML = isGoogle ? GOOGLE_ICON : GITHUB_ICON;
             providerLabel.textContent = isGoogle ? 'Signed in with Google' : 'Signed in with GitHub';
+
+            // Reflect the Pro subscription state (live Stripe check).
+            fetch('/api/billing/status', { credentials: 'same-origin' })
+                .then((res) => (res.ok ? res.json() : null))
+                .then((billing) => {
+                    if (billing && billing.pro) {
+                        el('proChip').style.display = 'inline-flex';
+                        el('manageBillingBtn').style.display = 'inline-flex';
+                    } else {
+                        el('upgradeBtn').style.display = 'inline-flex';
+                    }
+                })
+                .catch(() => {
+                    el('upgradeBtn').style.display = 'inline-flex';
+                });
         }
 
         function renderSignedOut(title, message) {

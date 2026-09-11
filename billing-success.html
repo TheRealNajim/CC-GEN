@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <meta name="description" content="Your CC-GEN Pro subscription is active.">
+    <title>Welcome to Pro | CC-GEN</title>
+    <link rel="icon" type="image/jpeg" href="Logo%20(1).JPG">
+    <link rel="stylesheet" href="billing.css">
+    <script src="theme.js"></script>
+</head>
+<body>
+
+    <div class="auth-wrapper">
+        <div class="success-card">
+
+            <div class="success-icon-badge">
+                <div class="checkmark-icon">&#10003;</div>
+            </div>
+
+            <h1 class="success-title" id="successTitle">You're Now CC-GEN Pro!</h1>
+            <p class="subtitle" id="successSubtitle">Activating your Pro benefits&hellip;</p>
+
+            <div class="pro-chip" id="proChip" style="display: none;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 5.9 6.3.5-4.8 4.1 1.5 6.1L12 15.2l-5.4 3.4 1.5-6.1L3.3 8.4l6.3-.5L12 2z"/></svg>
+                <span>Pro Member</span>
+            </div>
+
+            <!-- Loading state -->
+            <div class="session-loading" id="sessionLoading">
+                <div class="spinner" role="status" aria-label="Verifying subscription"></div>
+                <p>Verifying your subscription with Stripe&hellip;</p>
+            </div>
+
+            <!-- Subscription details -->
+            <div id="detailSection" style="display: none;">
+                <div class="billing-detail-box">
+                    <div class="billing-detail-row">
+                        <span class="label">Plan</span>
+                        <span class="value" id="planValue">&mdash;</span>
+                    </div>
+                    <div class="billing-detail-row">
+                        <span class="label">Renews on</span>
+                        <span class="value" id="renewalValue">&mdash;</span>
+                    </div>
+                    <div class="billing-detail-row">
+                        <span class="label">Bulk export limit</span>
+                        <span class="value">500 cards / batch</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons" id="actionButtons">
+                <a href="cc-gen.html#bulk-generator" class="btn-primary">
+                    <span>Open Bulk Generator</span>
+                </a>
+                <a href="/api/billing/portal" class="btn-secondary" id="manageBtn">
+                    <span>Manage Subscription</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const el = (id) => document.getElementById(id);
+
+        function formatDate(unixSeconds) {
+            if (!unixSeconds) return '\u2014';
+            const d = new Date(unixSeconds * 1000);
+            return d.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        fetch('/api/billing/status', { credentials: 'same-origin' })
+            .then((res) => (res.ok ? res.json() : null))
+            .then((data) => {
+                el('sessionLoading').style.display = 'none';
+
+                if (data && data.pro) {
+                    el('detailSection').style.display = 'block';
+                    el('proChip').style.display = 'inline-flex';
+                    el('planValue').textContent = data.plan === 'yearly' ? 'Pro \u00b7 Yearly' : 'Pro \u00b7 Monthly';
+                    el('renewalValue').textContent = formatDate(data.renewalDate);
+                    el('successSubtitle').textContent = 'Payment confirmed \u2014 your Pro benefits are active on this browser.';
+                } else {
+                    // Landed here without an active subscription (e.g. direct visit).
+                    el('successTitle').textContent = 'CC-GEN Billing';
+                    el('successSubtitle').textContent = 'No active Pro subscription was found for this browser.';
+                    el('actionButtons').classList.add('single');
+                    const primary = el('actionButtons').querySelector('.btn-primary');
+                    primary.href = 'pricing.html';
+                    primary.querySelector('span').textContent = 'View Pricing';
+                    el('manageBtn').style.display = 'none';
+                }
+            })
+            .catch(() => {
+                el('sessionLoading').style.display = 'none';
+                el('successTitle').textContent = 'Almost There';
+                el('successSubtitle').textContent = 'We could not confirm your subscription just now. Reload this page in a moment.';
+            });
+    </script>
+
+    <!-- Page Transitions & Smooth Effects Engine -->
+    <script src="transitions.js"></script>
+    <script src="smooth-effects.js"></script>
+</body>
+</html>

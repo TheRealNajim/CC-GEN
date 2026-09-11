@@ -1,7 +1,9 @@
 /**
  * CC-GEN OAuth — Current Session
  * Route: GET /api/auth/session
- * Returns the signed-in user (from the session cookie) as JSON.
+ * Returns the signed-in user (from the session cookie) as JSON,
+ * including the offline Pro state from the signed Pro cookie.
+ * (Live subscription verification lives in /api/billing/status.)
  */
 
 const lib = require('../_lib');
@@ -17,6 +19,8 @@ module.exports = (req, res) => {
         return res.end(JSON.stringify({ authenticated: false, user: null }));
     }
 
+    const pro = lib.getProFromRequest(req);
+
     res.statusCode = 200;
     res.end(
         JSON.stringify({
@@ -26,7 +30,8 @@ module.exports = (req, res) => {
                 name: session.name,
                 email: session.email,
                 avatar: session.avatar
-            }
+            },
+            pro: pro ? { plan: pro.plan } : false
         })
     );
 };

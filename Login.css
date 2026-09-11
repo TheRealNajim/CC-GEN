@@ -240,6 +240,23 @@ body {
     display: block;
 }
 
+/* Pro member chip (gradient variant) */
+
+.provider-chip.pro-chip {
+    background: var(--primary-gradient);
+    border: none;
+    color: #FFFFFF;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-size: 12px;
+    box-shadow: var(--shadow-glow);
+}
+
+.provider-chip.pro-chip svg {
+    color: #FFFFFF;
+}
+
 /* ------------------------------------------------------------------
    Loading skeleton
    ------------------------------------------------------------------ */
