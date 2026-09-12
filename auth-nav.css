@@ -1,0 +1,124 @@
+/* ==========================================================================
+   CC-GEN SESSION-AWARE NAV — ACCOUNT CHIP
+   Shown in the site header when the visitor is signed in.
+   Loaded together with auth-nav.js on every standard-header page.
+   ========================================================================== */
+
+/* Account chip (avatar + name + PRO tag) */
+.nav-account-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 14px 6px 6px;
+    border-radius: 9999px;
+    border: 1px solid #E2E8F0;
+    background: #F8FAFC;
+    color: #0F172A;
+    font-weight: 700;
+    font-size: 0.88rem;
+    line-height: 1;
+    text-decoration: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    max-width: 240px;
+    cursor: pointer;
+}
+
+.nav-account-chip:hover {
+    border-color: #EB001B;
+    box-shadow: 0 6px 18px -6px rgba(235, 0, 27, 0.3);
+    transform: translateY(-1px);
+}
+
+.nav-account-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #EB001B 0%, #F79E1B 100%);
+    color: #FFFFFF;
+    font-size: 0.72rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    letter-spacing: 0.02em;
+}
+
+.nav-account-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.nav-account-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+
+.nav-account-pro {
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #EB001B 0%, #F79E1B 100%);
+    color: #FFFFFF;
+    font-size: 0.56rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 9999px;
+}
+
+/* Sign out link next to the chip */
+.nav-signout-link {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #64748B;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.18s ease;
+}
+
+.nav-signout-link:hover {
+    color: #EB001B;
+}
+
+/* Dark mode */
+[data-theme="dark"] .nav-account-chip {
+    background: #1E293B;
+    border-color: #334155;
+    color: #F8FAFC;
+}
+
+[data-theme="dark"] .nav-account-chip:hover {
+    border-color: #F79E1B;
+}
+
+[data-theme="dark"] .nav-signout-link {
+    color: #94A3B8;
+}
+
+[data-theme="dark"] .nav-signout-link:hover {
+    color: #F79E1B;
+}
+
+/* Mobile: inside the mobile nav block, stack neatly */
+.mobile-nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Small screens: hide the name text, keep avatar + PRO */
+@media (max-width: 640px) {
+    .nav-account-name {
+        display: none;
+    }
+
+    .nav-account-chip {
+        padding: 4px 10px 4px 4px;
+    }
+}
