@@ -173,6 +173,48 @@ function getProFromRequest(req) {
 }
 
 /* ------------------------------------------------------------------ */
+/* Request body & origin                                               */
+/* ------------------------------------------------------------------ */
+
+function readJsonBody(req, maxBytes) {
+    const limit = maxBytes || 4096;
+    return new Promise((resolve, reject) => {
+        let size = 0;
+        const chunks = [];
+        req.on('data', (chunk) => {
+            size += chunk.length;
+            if (size > limit) {
+                reject(new Error('body_too_large'));
+                req.destroy();
+                return;
+            }
+            chunks.push(chunk);
+        });
+        req.on('end', () => {
+            try {
+                const text = Buffer.concat(chunks).toString('utf8');
+                resolve(text ? JSON.parse(text) : {});
+            } catch (e) {
+                reject(new Error('invalid_json'));
+            }
+        });
+        req.on('error', () => reject(new Error('read_error')));
+    });
+}
+
+function isSameOrigin(req) {
+    const origin = req.headers.origin;
+    if (!origin) return true; // Non-browser clients (curl, tests) and same-origin navigations.
+    try {
+        const originHost = new URL(origin).host;
+        const host = req.headers['x-forwarded-host'] || req.headers.host;
+        return originHost === host;
+    } catch (e) {
+        return false;
+    }
+}
+
+/* ------------------------------------------------------------------ */
 /* Responses                                                           */
 /* ------------------------------------------------------------------ */
 
@@ -294,6 +336,8 @@ module.exports = {
     verifyProToken,
     getSessionFromRequest,
     getProFromRequest,
+    readJsonBody,
+    isSameOrigin,
     redirect,
     escapeHtml,
     errorPage

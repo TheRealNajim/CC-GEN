@@ -40,6 +40,9 @@ Social sign-in/sign-up runs through **Vercel serverless functions** in the [`api
 | `GET /api/auth/callback/github` | GitHub callback: exchanges the code, creates the session cookie |
 | `GET /api/auth/session` | Returns `{ authenticated, user }` for the current session |
 | `GET /api/auth/logout` | Clears the session cookie and returns to the sign-in page |
+| `POST /api/auth/email/register` | Creates an email/password account (Firebase Auth) |
+| `POST /api/auth/email/login` | Signs in with email/password (Firebase Auth) |
+| `POST /api/auth/email/reset` | Sends a password-reset email (Firebase Auth) |
 
 ### 1. Create the OAuth credentials
 
@@ -82,6 +85,29 @@ npm i -g vercel
 vercel          # link the project (pulls env vars)
 vercel dev      # serve the site + /api functions at http://localhost:3000
 ```
+
+---
+
+## ✉️ Email & Password Accounts (Firebase Auth)
+
+Users who don't want Google/GitHub can register with email and password. Credentials are created and verified through **Google Firebase Auth's REST API** — passwords are stored and hashed by Google and never touch our code or logs. On success the same signed CC-GEN session cookie is issued, so email accounts work identically to OAuth ones (including Pro billing and the customer portal).
+
+- **Duplicate protection**: registering an email that already exists returns a friendly "try signing in instead" error.
+- **Forgot password**: the sign-in page's "Forgot password?" link triggers a Firebase reset email; no email infrastructure needed on our side.
+- **Rate limiting & lockout**: handled by Firebase's built-in abuse protection.
+
+### Setup
+
+1. Go to [console.firebase.google.com](https://console.firebase.google.com) → **Add project** (e.g. `cc-gen`). You can disable Google Analytics when prompted.
+2. In the project: **Build → Authentication → Get started → Email/Password → Enable → Save**.
+3. **Project Settings** (gear icon) → *General* → copy the **Web API Key** (`AIza...`).
+4. In your Vercel project → *Settings* → *Environment Variables*, add:
+
+| Variable | Value |
+| :--- | :--- |
+| `FIREBASE_API_KEY` | The Web API key from step 3 |
+
+Then redeploy. Until it's set, the email forms show a friendly "not configured" message while Google/GitHub sign-in keeps working.
 
 ---
 

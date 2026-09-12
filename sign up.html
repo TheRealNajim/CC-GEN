@@ -229,6 +229,16 @@
                             <span>I agree to CC-GEN's <a href="faq.html">Terms of Service</a>, <a href="faq.html">Privacy Policy</a>, and Sandbox Testing guidelines.</span>
                         </label>
 
+                        <!-- Registration Error Feedback -->
+                        <div class="auth-form-error" id="auth-error-box" style="display: none;" role="alert">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            <span id="auth-error-text"></span>
+                        </div>
+
                         <!-- Submit Button -->
                         <button type="submit" class="btn-auth-submit" id="btn-submit-signup">
                             <span>Create Free Account</span>
@@ -353,25 +363,80 @@
             }
         }
 
-        // Registration Handler
-        function handleSignUp(e) {
+        // Registration Handler (real email/password accounts via Firebase)
+        function showAuthError(message) {
+            const box = document.getElementById('auth-error-box');
+            document.getElementById('auth-error-text').textContent = message;
+            box.style.display = 'flex';
+            box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function hideAuthError() {
+            document.getElementById('auth-error-box').style.display = 'none';
+        }
+
+        function friendlyError(data) {
+            switch (data && data.error) {
+                case 'email_exists':
+                    return 'An account with this email already exists. Try signing in instead.';
+                case 'validation':
+                    return data.message || 'Please check your details and try again.';
+                case 'not_configured':
+                    return 'Email sign-up is not configured on the server yet. You can still continue with Google or GitHub below.';
+                case 'rate_limited':
+                    return 'Too many attempts. Please wait a moment and try again.';
+                default:
+                    return (data && data.message) || 'Something went wrong. Please try again.';
+            }
+        }
+
+        async function handleSignUp(e) {
             e.preventDefault();
+            hideAuthError();
+
+            const firstName = document.getElementById('signup-fname').value.trim();
+            const lastName = document.getElementById('signup-lname').value.trim();
+            const email = document.getElementById('signup-email').value.trim().toLowerCase();
             const pass = document.getElementById('signup-password').value;
             const confirmPass = document.getElementById('signup-confirm-password').value;
 
             if (pass !== confirmPass) {
-                alert('Passwords do not match! Please check and try again.');
+                showAuthError('Passwords do not match! Please check and try again.');
+                return;
+            }
+
+            if (pass.length < 8) {
+                showAuthError('Password must be at least 8 characters long.');
                 return;
             }
 
             const btn = document.getElementById('btn-submit-signup');
+            const originalContent = btn.innerHTML;
             btn.disabled = true;
             btn.innerHTML = '<span>Creating Account...</span>';
 
-            setTimeout(() => {
-                alert('Account successfully created! Welcome to CC-GEN. Redirecting to Card Studio...');
-                window.location.href = 'cc-gen.html';
-            }, 1000);
+            try {
+                const res = await fetch('/api/auth/email/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'same-origin',
+                    body: JSON.stringify({ firstName, lastName, email, password: pass })
+                });
+
+                const data = await res.json().catch(() => ({}));
+
+                if (res.ok && data.success) {
+                    window.location.href = data.redirect;
+                    return;
+                }
+
+                showAuthError(friendlyError(data));
+            } catch (err) {
+                showAuthError('We could not reach the server. Please check your connection and try again.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalContent;
+            }
         }
 
         // Social OAuth (Google / GitHub) — serverless handlers live at /api/auth/*

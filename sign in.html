@@ -140,7 +140,7 @@
                                         <polyline points="22,6 12,13 2,6"></polyline>
                                     </svg>
                                 </span>
-                                <input type="text" id="signin-email" class="form-input" placeholder="developer@gmail.com" required>
+                                <input type="email" id="signin-email" class="form-input" placeholder="developer@gmail.com" required>
                             </div>
                         </div>
 
@@ -170,7 +170,28 @@
                                 <input type="checkbox" id="remember-me">
                                 <span>Remember this device</span>
                             </label>
-                            <a href="faq.html#contact-support" class="forgot-password-link">Forgot password?</a>
+                            <a href="#" class="forgot-password-link" onclick="showResetFlow(); return false;">Forgot password?</a>
+                        </div>
+
+                        <!-- Password Reset (revealed by "Forgot password?") -->
+                        <div class="auth-reset-box" id="reset-box" style="display: none;">
+                            <p>Enter your account email and we'll send you a password reset link.</p>
+                            <input type="email" id="reset-email" class="form-input" placeholder="you@gmail.com">
+                            <div class="reset-action-row">
+                                <button type="button" class="btn-secondary" style="padding: 10px 18px; font-size: 0.85rem;" onclick="sendPasswordReset()">Send Reset Link</button>
+                                <button type="button" class="btn-link" onclick="hideResetFlow()">Cancel</button>
+                            </div>
+                            <span class="reset-status" id="reset-status"></span>
+                        </div>
+
+                        <!-- Sign-In Error Feedback -->
+                        <div class="auth-form-error" id="auth-error-box" style="display: none;" role="alert">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            <span id="auth-error-text"></span>
                         </div>
 
                         <!-- Submit Button -->
@@ -297,19 +318,111 @@
             }
         }
 
-        // Demo Sign-In Action
-        function handleSignIn(e) {
+        // Sign-In Handler (real email/password accounts via Firebase)
+        function showAuthError(message) {
+            const box = document.getElementById('auth-error-box');
+            document.getElementById('auth-error-text').textContent = message;
+            box.style.display = 'flex';
+            box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function hideAuthError() {
+            document.getElementById('auth-error-box').style.display = 'none';
+        }
+
+        function friendlyError(data) {
+            switch (data && data.error) {
+                case 'invalid_credentials':
+                    return 'Incorrect email or password. Please try again.';
+                case 'validation':
+                    return data.message || 'Please check your details and try again.';
+                case 'not_configured':
+                    return 'Email sign-in is not configured on the server yet. You can still continue with Google or GitHub below.';
+                case 'rate_limited':
+                    return 'Too many attempts. Please wait a moment and try again.';
+                case 'account_disabled':
+                    return 'This account has been disabled. Contact support for help.';
+                default:
+                    return (data && data.message) || 'Something went wrong. Please try again.';
+            }
+        }
+
+        async function handleSignIn(e) {
             e.preventDefault();
+            hideAuthError();
+
+            const email = document.getElementById('signin-email').value.trim().toLowerCase();
+            const password = document.getElementById('signin-password').value;
+
             const btn = document.getElementById('btn-submit-signin');
             const originalContent = btn.innerHTML;
-
             btn.disabled = true;
             btn.innerHTML = '<span>Signing In...</span>';
 
-            setTimeout(() => {
-                alert('Sign in successful! Redirecting to Card Studio...');
-                window.location.href = 'cc-gen.html';
-            }, 1000);
+            try {
+                const res = await fetch('/api/auth/email/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'same-origin',
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await res.json().catch(() => ({}));
+
+                if (res.ok && data.success) {
+                    window.location.href = data.redirect;
+                    return;
+                }
+
+                showAuthError(friendlyError(data));
+            } catch (err) {
+                showAuthError('We could not reach the server. Please check your connection and try again.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalContent;
+            }
+        }
+
+        // Forgot password flow
+        function showResetFlow() {
+            hideAuthError();
+            const box = document.getElementById('reset-box');
+            box.style.display = 'block';
+            document.getElementById('reset-email').focus();
+        }
+
+        function hideResetFlow() {
+            document.getElementById('reset-box').style.display = 'none';
+            document.getElementById('reset-status').textContent = '';
+        }
+
+        async function sendPasswordReset() {
+            const email = document.getElementById('reset-email').value.trim().toLowerCase();
+            const status = document.getElementById('reset-status');
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                status.textContent = 'Please enter a valid email address.';
+                status.style.color = 'var(--primary-color)';
+                return;
+            }
+
+            status.textContent = 'Sending...';
+            status.style.color = 'var(--text-muted)';
+
+            try {
+                const res = await fetch('/api/auth/email/reset', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'same-origin',
+                    body: JSON.stringify({ email })
+                });
+                const data = await res.json().catch(() => ({}));
+                status.textContent = (res.ok && data.message) || 'If an account exists for that email, a reset link is on its way.';
+                status.style.color = '#10B981';
+            } catch (err) {
+                status.textContent = 'Could not send the reset email right now. Please try again.';
+                status.style.color = 'var(--primary-color)';
+            }
         }
 
         // Social OAuth (Google / GitHub) — serverless handlers live at /api/auth/*
