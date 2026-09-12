@@ -1,15 +1,57 @@
 /**
- * CC-GEN OAuth — GitHub Callback
- * Route: GET /api/auth/callback/github
+ * CC-GEN OAuth — Google / GitHub Callback
+ * Route: GET /api/auth/callback/{google|github}
+ *
+ * Dynamic route: a single function serves both provider callbacks
+ * (keeps the deployment under the Hobby plan's 12-function limit).
  * Verifies the OAuth state, exchanges the authorization code for an
- * access token, fetches the GitHub profile (plus a verified primary
- * email), then issues a signed session cookie and redirects to the
- * success page.
+ * access token, fetches the profile, then issues a signed session
+ * cookie and redirects to the success page.
  */
 
 const lib = require('../../_lib');
 
-async function exchangeCodeForTokens(code, redirectUri, state) {
+function providerFromRequest(req) {
+    const path = String(req.url || '').split('?')[0].replace(/\/+$/, '');
+    const segments = path.split('/');
+    return segments[4] || '';
+}
+
+/* ------------------------------------------------------------------ */
+/* Provider-specific API calls                                         */
+/* ------------------------------------------------------------------ */
+
+async function exchangeGoogleCode(code, redirectUri) {
+    const response = await fetch('https://oauth2.googleapis.com/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+            code,
+            client_id: process.env.GOOGLE_CLIENT_ID,
+            client_secret: process.env.GOOGLE_CLIENT_SECRET,
+            redirect_uri: redirectUri,
+            grant_type: 'authorization_code'
+        })
+    });
+
+    if (!response.ok) {
+        throw new Error(`Google token exchange failed (${response.status})`);
+    }
+    return response.json();
+}
+
+async function fetchGoogleProfile(accessToken) {
+    const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+        headers: { Authorization: `Bearer ${accessToken}` }
+    });
+
+    if (!response.ok) {
+        throw new Error(`Google profile request failed (${response.status})`);
+    }
+    return response.json();
+}
+
+async function exchangeGitHubCode(code, redirectUri, state) {
     const response = await fetch('https://github.com/login/oauth/access_token', {
         method: 'POST',
         headers: {
@@ -74,7 +116,24 @@ async function fetchGitHubEmail(accessToken) {
     }
 }
 
+/* ------------------------------------------------------------------ */
+/* Shared callback flow                                                */
+/* ------------------------------------------------------------------ */
+
 module.exports = async (req, res) => {
+    const provider = providerFromRequest(req);
+
+    if (provider !== 'google' && provider !== 'github') {
+        return lib.errorPage(
+            res,
+            404,
+            'Unknown Sign-In Provider',
+            `We don't recognise <code>${lib.escapeHtml(provider || '(none)')}</code> as a sign-in callback.`,
+            []
+        );
+    }
+
+    const label = provider === 'google' ? 'Google' : 'GitHub';
     const url = new URL(req.url, lib.getBaseUrl(req));
     const providerError = url.searchParams.get('error');
     const code = url.searchParams.get('code');
@@ -88,8 +147,8 @@ module.exports = async (req, res) => {
         return lib.errorPage(
             res,
             401,
-            'GitHub Sign-In Was Cancelled',
-            'You closed the GitHub authorization screen or denied access, so no account was created. Nothing has been saved.',
+            `${label} Sign-In Was Cancelled`,
+            `You closed the ${label} authorization screen or denied access, so no account was created. Nothing has been saved.`,
             []
         );
     }
@@ -121,19 +180,36 @@ module.exports = async (req, res) => {
     }
 
     try {
-        const redirectUri = `${lib.getBaseUrl(req)}/api/auth/callback/github`;
-        const tokens = await exchangeCodeForTokens(code, redirectUri, state);
+        const redirectUri = `${lib.getBaseUrl(req)}/api/auth/callback/${provider}`;
 
-        const profile = await fetchGitHubProfile(tokens.access_token);
-        const email = await fetchGitHubEmail(tokens.access_token);
+        let user;
+        if (provider === 'google') {
+            const tokens = await exchangeGoogleCode(code, redirectUri);
+            if (!tokens.access_token) {
+                throw new Error('No access token returned by Google');
+            }
 
-        const user = {
-            provider: 'github',
-            id: profile.id,
-            name: profile.name || profile.login || 'CC-GEN User',
-            email: email || profile.email || null,
-            avatar: profile.avatar_url || null
-        };
+            const profile = await fetchGoogleProfile(tokens.access_token);
+            user = {
+                provider: 'google',
+                id: profile.sub,
+                name: profile.name || profile.given_name || 'CC-GEN User',
+                email: profile.email || null,
+                avatar: profile.picture || null
+            };
+        } else {
+            const tokens = await exchangeGitHubCode(code, redirectUri, state);
+            const profile = await fetchGitHubProfile(tokens.access_token);
+            const email = await fetchGitHubEmail(tokens.access_token);
+
+            user = {
+                provider: 'github',
+                id: profile.id,
+                name: profile.name || profile.login || 'CC-GEN User',
+                email: email || profile.email || null,
+                avatar: profile.avatar_url || null
+            };
+        }
 
         const session = lib.signSession(user);
 
@@ -142,12 +218,12 @@ module.exports = async (req, res) => {
             clearState
         ]);
     } catch (err) {
-        console.error('[oauth:github:callback]', err && err.message);
+        console.error(`[oauth:${provider}:callback]`, err && err.message);
         return lib.errorPage(
             res,
             502,
-            'GitHub Sign-In Failed',
-            'We could not complete the handshake with GitHub. Please try again in a moment.',
+            `${label} Sign-In Failed`,
+            `We could not complete the handshake with ${label}. Please try again in a moment.`,
             []
         );
     }
