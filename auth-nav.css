@@ -104,12 +104,18 @@
     color: #F79E1B;
 }
 
-/* Mobile: inside the mobile nav block, stack neatly */
-.mobile-nav-auth {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
+/* Inside the mobile menu, make the chip and sign-out comfortable tap targets.
+   (Visibility/display is owned by each page's own responsive CSS —
+   do NOT set display here or the buttons leak onto the desktop header.) */
+.mobile-nav-auth .nav-account-chip {
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.mobile-nav-auth .nav-signout-link {
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
 }
 
 /* Small screens: hide the name text, keep avatar + PRO */
