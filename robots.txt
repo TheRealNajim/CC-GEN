@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://cc-gen-seven.vercel.app/sitemap.xml
+Sitemap: https://cc-gen-cards.vercel.app/sitemap.xml
