@@ -1,0 +1,486 @@
+/* ==========================================================================
+   CC-GEN — Liquid Glass layer (iOS-style gloss)
+   Loaded LAST: layers frosted translucency, specular highlights and depth
+   on top of the existing palette (monochrome slate/white + red accent).
+   ========================================================================== */
+
+/* --- Ambient backdrop (gives the blur something to refract) -------------- */
+body {
+    background-color: var(--bg-page, #F8FAFC);
+    background-image:
+        radial-gradient(900px 480px at 88% -5%, rgba(235, 0, 27, 0.09), transparent 60%),
+        radial-gradient(720px 460px at -8% 30%, rgba(71, 85, 105, 0.10), transparent 55%),
+        radial-gradient(680px 520px at 50% 110%, rgba(235, 0, 27, 0.05), transparent 60%);
+    background-attachment: fixed;
+}
+
+[data-theme="dark"] body {
+    background-color: var(--bg-page, #090D16);
+    background-image:
+        radial-gradient(900px 480px at 88% -5%, rgba(235, 0, 27, 0.14), transparent 60%),
+        radial-gradient(720px 460px at -8% 30%, rgba(71, 85, 105, 0.16), transparent 55%),
+        radial-gradient(680px 520px at 50% 110%, rgba(235, 0, 27, 0.07), transparent 60%);
+}
+
+/* --- Glass surfaces ------------------------------------------------------ */
+.hero-generator-card,
+.doc-portal-card,
+.faq-spotlight-wrapper,
+.faq-mini-item,
+.studio-customizer-box,
+.bulk-box-wrapper,
+.gallery-card-item,
+.signature-panel,
+.modal-dialog,
+.feature-card,
+.code-integration-box,
+.table-wrapper,
+.disclaimer-card,
+.faq-item,
+.search-input-group,
+.support-cta-box,
+.plan-card,
+.trust-item,
+.success-card,
+.billing-detail-box,
+.auth-wrapper,
+.auth-card-wrapper,
+.auth-reset-box,
+.code-container,
+.provider-chip,
+.user-profile-badge,
+.nav-account-chip {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.38) 55%, rgba(255, 255, 255, 0.5));
+    -webkit-backdrop-filter: blur(22px) saturate(170%);
+    backdrop-filter: blur(22px) saturate(170%);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.25),
+        0 24px 50px -24px rgba(2, 6, 23, 0.28);
+}
+
+/* Bigger panels get the full iOS corner treatment */
+.hero-generator-card,
+.faq-spotlight-wrapper,
+.modal-dialog,
+.studio-customizer-box,
+.bulk-box-wrapper,
+.support-cta-box,
+.success-card,
+.auth-wrapper,
+.auth-card-wrapper,
+.code-container {
+    border-radius: 28px;
+}
+
+.stats-section {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.35));
+    -webkit-backdrop-filter: blur(22px) saturate(170%);
+    backdrop-filter: blur(22px) saturate(170%);
+    border-top: 1px solid rgba(255, 255, 255, 0.75);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.75);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Sticky glass chrome */
+.site-header {
+    background: rgba(255, 255, 255, 0.62);
+    -webkit-backdrop-filter: blur(26px) saturate(190%);
+    backdrop-filter: blur(26px) saturate(190%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow:
+        inset 0 -1px 0 rgba(255, 255, 255, 0.45),
+        0 12px 34px -18px rgba(2, 6, 23, 0.25);
+}
+
+.top-faq-bar {
+    background: linear-gradient(90deg, rgba(15, 23, 42, 0.88), rgba(30, 41, 59, 0.82) 50%, rgba(15, 23, 42, 0.88));
+    -webkit-backdrop-filter: blur(18px) saturate(170%);
+    backdrop-filter: blur(18px) saturate(170%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+/* Frosted badges & icon tiles */
+.brand-badge,
+.top-faq-badge,
+.section-badge-pill,
+.section-badge,
+.auth-badge-pill,
+.pricing-hero-badge,
+.live-badge,
+.pro-chip,
+.pro-badge-chip,
+.status-badge,
+.doc-card-icon,
+.feature-icon-box,
+.faq-icon-wrapper,
+.success-icon-badge,
+.social-btn,
+.theme-toggle-btn,
+.password-toggle-btn,
+.search-clear-btn,
+.modal-close-btn,
+.theme-swatch {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.65),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.15),
+        0 6px 16px -8px rgba(2, 6, 23, 0.3);
+}
+
+.doc-card-icon,
+.feature-icon-box,
+.faq-icon-wrapper,
+.social-btn {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.45));
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    backdrop-filter: blur(14px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+/* --- Pill buttons (capsule chrome) --------------------------------------- */
+.btn-primary,
+.btn-secondary,
+.btn-generate,
+.btn-copy,
+.btn-auth-submit,
+.btn-submit,
+.btn-white,
+.btn-light,
+.btn-outline-white,
+.btn-social,
+.plan-action-btn,
+.search-submit-btn,
+.copy-btn,
+.btn-secondary-auth,
+.btn-light:hover {
+    border-radius: 9999px;
+}
+
+/* Red primary buttons: candy gloss */
+.btn-primary,
+.btn-generate,
+.btn-auth-submit,
+.btn-submit,
+.plan-action-btn,
+.search-submit-btn {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        inset 0 -2px 6px rgba(0, 0, 0, 0.18),
+        0 12px 26px -10px rgba(235, 0, 27, 0.55);
+}
+
+.btn-primary:hover,
+.btn-auth-submit:hover,
+.btn-submit:hover {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        inset 0 -2px 6px rgba(0, 0, 0, 0.18),
+        0 18px 34px -12px rgba(235, 0, 27, 0.65);
+}
+
+/* Sheen sweep across primary buttons */
+.btn-primary,
+.btn-generate,
+.btn-auth-submit,
+.btn-submit,
+.plan-action-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::after,
+.btn-generate::after,
+.btn-auth-submit::after,
+.btn-submit::after,
+.plan-action-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -130%;
+    width: 55%;
+    height: 100%;
+    background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+
+.btn-primary:hover::after,
+.btn-generate:hover::after,
+.btn-auth-submit:hover::after,
+.btn-submit:hover::after,
+.plan-action-btn:hover::after {
+    left: 140%;
+}
+
+/* Neutral glass buttons */
+.btn-secondary,
+.btn-copy,
+.copy-btn,
+.btn-social,
+.btn-secondary-auth {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.55));
+    -webkit-backdrop-filter: blur(16px) saturate(170%);
+    backdrop-filter: blur(16px) saturate(170%);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.3),
+        0 10px 22px -12px rgba(2, 6, 23, 0.3);
+}
+
+.btn-secondary:hover,
+.btn-copy:hover,
+.copy-btn:hover,
+.btn-social:hover {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.7));
+}
+
+.btn-outline-white {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Dark glass button (Generate / others on dark) */
+.btn-generate {
+    background: linear-gradient(180deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+}
+
+/* --- Segmented controls / chips ------------------------------------------ */
+.network-btn,
+.tab-btn,
+.code-tab-btn,
+.gallery-filter-btn,
+.category-chip {
+    border-radius: 9999px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.network-btn.active,
+.tab-btn.active,
+.code-tab-btn.active,
+.gallery-filter-btn.active,
+.category-chip.active {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.65));
+    -webkit-backdrop-filter: blur(12px) saturate(170%);
+    backdrop-filter: blur(12px) saturate(170%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        0 6px 14px -6px rgba(2, 6, 23, 0.3);
+}
+
+/* --- Glass inputs --------------------------------------------------------- */
+.form-input,
+.customizer-input,
+.customizer-select,
+.bulk-input-field,
+.search-input,
+.code-container form input {
+    background: rgba(255, 255, 255, 0.55);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    backdrop-filter: blur(12px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 2px 6px rgba(2, 6, 23, 0.06);
+}
+
+.form-input:focus,
+.customizer-input:focus,
+.customizer-select:focus,
+.bulk-input-field:focus,
+.search-input:focus {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(235, 0, 27, 0.45);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 0 0 4px rgba(235, 0, 27, 0.12);
+}
+
+.search-input-group:focus-within {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+        0 0 0 4px rgba(235, 0, 27, 0.12),
+        0 18px 40px -18px rgba(2, 6, 23, 0.3);
+}
+
+/* --- Modals: iOS sheet blur ---------------------------------------------- */
+.modal-backdrop {
+    background: rgba(2, 6, 23, 0.45);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    backdrop-filter: blur(10px) saturate(140%);
+}
+
+/* --- Credit cards: physical gloss (kept opaque, just lit) ----------------- */
+.hero-visual-card,
+.card-face,
+.visual-credit-card,
+.mini-card-preview,
+.card-interactive-preview {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        inset 0 0 44px rgba(255, 255, 255, 0.08),
+        0 24px 48px -18px rgba(2, 6, 23, 0.5);
+}
+
+/* Red glass banners (CTA / FAQ bar) */
+.cta-box,
+.faq-highlight-bar {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+        0 26px 55px -22px rgba(235, 0, 27, 0.5);
+}
+
+/* ==========================================================================
+   Dark theme — smoked glass
+   ========================================================================== */
+[data-theme="dark"] .hero-generator-card,
+[data-theme="dark"] .doc-portal-card,
+[data-theme="dark"] .faq-spotlight-wrapper,
+[data-theme="dark"] .faq-mini-item,
+[data-theme="dark"] .studio-customizer-box,
+[data-theme="dark"] .bulk-box-wrapper,
+[data-theme="dark"] .gallery-card-item,
+[data-theme="dark"] .signature-panel,
+[data-theme="dark"] .modal-dialog,
+[data-theme="dark"] .feature-card,
+[data-theme="dark"] .code-integration-box,
+[data-theme="dark"] .table-wrapper,
+[data-theme="dark"] .disclaimer-card,
+[data-theme="dark"] .faq-item,
+[data-theme="dark"] .search-input-group,
+[data-theme="dark"] .support-cta-box,
+[data-theme="dark"] .plan-card,
+[data-theme="dark"] .trust-item,
+[data-theme="dark"] .success-card,
+[data-theme="dark"] .billing-detail-box,
+[data-theme="dark"] .auth-wrapper,
+[data-theme="dark"] .auth-card-wrapper,
+[data-theme="dark"] .auth-reset-box,
+[data-theme="dark"] .code-container,
+[data-theme="dark"] .provider-chip,
+[data-theme="dark"] .user-profile-badge,
+[data-theme="dark"] .nav-account-chip {
+    background: linear-gradient(180deg, rgba(30, 41, 59, 0.62), rgba(19, 27, 46, 0.42) 55%, rgba(30, 41, 59, 0.5));
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.16),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+        0 24px 50px -24px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .stats-section {
+    background: linear-gradient(180deg, rgba(30, 41, 59, 0.55), rgba(19, 27, 46, 0.4));
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .site-header {
+    background: rgba(19, 27, 46, 0.55);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow:
+        inset 0 -1px 0 rgba(255, 255, 255, 0.08),
+        0 12px 34px -18px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .doc-card-icon,
+[data-theme="dark"] .feature-icon-box,
+[data-theme="dark"] .faq-icon-wrapper,
+[data-theme="dark"] .social-btn {
+    background: linear-gradient(180deg, rgba(51, 65, 85, 0.7), rgba(30, 41, 59, 0.5));
+    border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+[data-theme="dark"] .brand-badge,
+[data-theme="dark"] .top-faq-badge,
+[data-theme="dark"] .section-badge-pill,
+[data-theme="dark"] .section-badge,
+[data-theme="dark"] .auth-badge-pill,
+[data-theme="dark"] .pricing-hero-badge,
+[data-theme="dark"] .live-badge,
+[data-theme="dark"] .pro-chip,
+[data-theme="dark"] .pro-badge-chip,
+[data-theme="dark"] .status-badge,
+[data-theme="dark"] .doc-card-icon,
+[data-theme="dark"] .feature-icon-box,
+[data-theme="dark"] .faq-icon-wrapper,
+[data-theme="dark"] .success-icon-badge,
+[data-theme="dark"] .social-btn,
+[data-theme="dark"] .theme-toggle-btn,
+[data-theme="dark"] .password-toggle-btn,
+[data-theme="dark"] .search-clear-btn,
+[data-theme="dark"] .modal-close-btn,
+[data-theme="dark"] .theme-swatch {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+        0 6px 16px -8px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .btn-secondary,
+[data-theme="dark"] .btn-copy,
+[data-theme="dark"] .copy-btn,
+[data-theme="dark"] .btn-social,
+[data-theme="dark"] .btn-secondary-auth {
+    background: linear-gradient(180deg, rgba(51, 65, 85, 0.75), rgba(30, 41, 59, 0.55));
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+        0 10px 22px -12px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .btn-secondary:hover,
+[data-theme="dark"] .btn-copy:hover,
+[data-theme="dark"] .copy-btn:hover,
+[data-theme="dark"] .btn-social:hover {
+    background: linear-gradient(180deg, rgba(71, 85, 105, 0.8), rgba(51, 65, 85, 0.6));
+}
+
+[data-theme="dark"] .network-btn.active,
+[data-theme="dark"] .tab-btn.active,
+[data-theme="dark"] .code-tab-btn.active,
+[data-theme="dark"] .gallery-filter-btn.active,
+[data-theme="dark"] .category-chip.active {
+    background: linear-gradient(180deg, rgba(71, 85, 105, 0.85), rgba(51, 65, 85, 0.65));
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.28),
+        0 6px 14px -6px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .form-input,
+[data-theme="dark"] .customizer-input,
+[data-theme="dark"] .customizer-select,
+[data-theme="dark"] .bulk-input-field,
+[data-theme="dark"] .search-input,
+[data-theme="dark"] .code-container form input {
+    background: rgba(9, 13, 22, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        inset 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .form-input:focus,
+[data-theme="dark"] .customizer-input:focus,
+[data-theme="dark"] .customizer-select:focus,
+[data-theme="dark"] .bulk-input-field:focus,
+[data-theme="dark"] .search-input:focus {
+    background: rgba(9, 13, 22, 0.75);
+    border-color: rgba(235, 0, 27, 0.55);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 0 0 4px rgba(235, 0, 27, 0.18);
+}
+
+[data-theme="dark"] .faq-highlight-bar {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+        0 26px 55px -22px rgba(0, 0, 0, 0.6);
+}

@@ -13,6 +13,7 @@
     <script src="theme.js"></script>
     <link rel="stylesheet" href="auth-nav.css">
     <script src="auth-nav.js" defer></script>
+    <link rel="stylesheet" href="gloss.css">
 </head>
 
 <body>
@@ -441,7 +442,7 @@
             }
         }
 
-        // Social OAuth (Google / GitHub) — serverless handlers live at /api/auth/*
+        // Social OAuth (Google / GitHub) â€” serverless handlers live at /api/auth/*
         function startSocialAuth(provider) {
             window.location.href = '/api/auth/' + provider;
         }
