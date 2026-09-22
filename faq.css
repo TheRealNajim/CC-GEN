@@ -5,11 +5,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap');
 
 :root {
-    --primary-gradient: linear-gradient(135deg, #EB001B 0%, #F79E1B 100%);
-    --primary-gradient-hover: linear-gradient(135deg, #d30018 0%, #e08b12 100%);
+    --primary-gradient: linear-gradient(135deg, #EB001B 0%, #B80016 100%);
+    --primary-gradient-hover: linear-gradient(135deg, #C40017 0%, #C40017 100%);
     --primary-color: #EB001B;
-    --accent-orange: #F79E1B;
-    --accent-blue: #3B82F6;
+    --accent-orange: #B80016;
+    --accent-blue: #475569;
     
     --bg-page: #F8FAFC;
     --bg-surface: #FFFFFF;
@@ -303,7 +303,7 @@ button {
     transform: translateX(-50%);
     width: 600px;
     height: 400px;
-    background: radial-gradient(circle, rgba(235, 0, 27, 0.18) 0%, rgba(247, 158, 27, 0.08) 45%, transparent 70%);
+    background: radial-gradient(circle, rgba(235, 0, 27, 0.18) 0%, rgba(235, 0, 27, 0.08) 45%, transparent 70%);
     pointer-events: none;
 }
 
@@ -357,7 +357,7 @@ button {
 
 .search-input-group:focus-within {
     border-color: var(--accent-orange);
-    box-shadow: 0 16px 36px rgba(247, 158, 27, 0.2);
+    box-shadow: 0 16px 36px rgba(235, 0, 27, 0.2);
 }
 
 .search-icon {
@@ -675,7 +675,7 @@ button {
     right: 0;
     width: 250px;
     height: 100%;
-    background: radial-gradient(circle at 100% 50%, rgba(247, 158, 27, 0.15) 0%, transparent 70%);
+    background: radial-gradient(circle at 100% 50%, rgba(235, 0, 27, 0.15) 0%, transparent 70%);
     pointer-events: none;
 }
 

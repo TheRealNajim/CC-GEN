@@ -56,7 +56,7 @@ body {
     justify-content: center;
     padding: 30px 20px;
     position: absolute;
-    background: linear-gradient(134deg, #EB001B -43.28%, #F79E1B 97%);
+    background: linear-gradient(134deg, #EB001B -43.28%, #B80016 97%);
     text-decoration: none;
     color: black;
 
@@ -75,7 +75,7 @@ body {
 
 .read {
     margin-top: 10%;
-    background: linear-gradient(134deg, #EB001B -43.28%, #F79E1B 97%);
+    background: linear-gradient(134deg, #EB001B -43.28%, #B80016 97%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -131,7 +131,7 @@ form input {
     text-decoration: none;
     border-radius: 5px;
     line-height: 15px;
-    background: linear-gradient(134deg, #EB001B -43.28%, #F79E1B 97%);
+    background: linear-gradient(134deg, #EB001B -43.28%, #B80016 97%);
     color: white;
     margin-top: 10px;
 
@@ -333,7 +333,7 @@ footer {
         justify-content: center;
         padding: 13px 10px;
         position: absolute;
-        background: linear-gradient(134deg, #EB001B -43.28%, #F79E1B 97%);
+        background: linear-gradient(134deg, #EB001B -43.28%, #B80016 97%);
         text-decoration: none;
         color: black;
 
@@ -388,7 +388,7 @@ footer {
     }
 
     .code:valid {
-        border-radius: #3498db;
+        border-radius: #475569;
         box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.25);
     }
 
@@ -400,7 +400,7 @@ footer {
         padding: 18px 10px;
         text-decoration: none;
         border-radius: 5px;
-        background: linear-gradient(134deg, #EB001B -43.28%, #F79E1B 97%);
+        background: linear-gradient(134deg, #EB001B -43.28%, #B80016 97%);
         color: white;
         margin-top: -5px;
 

@@ -5,12 +5,12 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap');
 
 :root {
-    --primary-gradient: linear-gradient(135deg, #EB001B 0%, #F79E1B 100%);
-    --primary-gradient-hover: linear-gradient(135deg, #d30018 0%, #e08b12 100%);
+    --primary-gradient: linear-gradient(135deg, #EB001B 0%, #B80016 100%);
+    --primary-gradient-hover: linear-gradient(135deg, #C40017 0%, #C40017 100%);
     --primary-color: #EB001B;
-    --accent-orange: #F79E1B;
-    --accent-blue: #3B82F6;
-    --accent-purple: #8B5CF6;
+    --accent-orange: #B80016;
+    --accent-blue: #475569;
+    --accent-purple: #475569;
     
     --bg-page: #F8FAFC;
     --bg-surface: #FFFFFF;
@@ -309,7 +309,7 @@ button {
    ========================================================================== */
 .hero-section {
     padding: 56px 0 72px;
-    background: radial-gradient(circle at 80% 20%, rgba(247, 158, 27, 0.08) 0%, transparent 50%),
+    background: radial-gradient(circle at 80% 20%, rgba(235, 0, 27, 0.08) 0%, transparent 50%),
                 radial-gradient(circle at 10% 80%, rgba(235, 0, 27, 0.06) 0%, transparent 40%);
 }
 
@@ -481,7 +481,7 @@ button {
 
 /* Card Themes */
 .card-theme-orange {
-    background: linear-gradient(135deg, #F97316 0%, #EA580C 50%, #C2410C 100%);
+    background: linear-gradient(135deg, #B80016 0%, #A30014 50%, #8A0011 100%);
 }
 
 .card-theme-darkblue {
@@ -489,7 +489,7 @@ button {
 }
 
 .card-theme-purple {
-    background: linear-gradient(135deg, #6366F1 0%, #4F46E5 60%, #312E81 100%);
+    background: linear-gradient(135deg, #475569 0%, #334155 60%, #1E293B 100%);
 }
 
 .card-pattern-overlay {
@@ -523,7 +523,7 @@ button {
 .card-chip {
     width: 44px;
     height: 32px;
-    background: linear-gradient(135deg, #FDE047 0%, #CA8A04 100%);
+    background: linear-gradient(135deg, #FF4D63 0%, #8A0011 100%);
     border-radius: 6px;
     position: relative;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -606,7 +606,7 @@ button {
     align-items: center;
     gap: 8px;
     font-size: 0.85rem;
-    color: #10B981;
+    color: #475569;
     font-weight: 600;
 }
 
@@ -614,15 +614,15 @@ button {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #10B981;
-    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+    background: #475569;
+    box-shadow: 0 0 0 4px rgba(71, 85, 105, 0.2);
     animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-    70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    0% { box-shadow: 0 0 0 0 rgba(71, 85, 105, 0.4); }
+    70% { box-shadow: 0 0 0 6px rgba(71, 85, 105, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(71, 85, 105, 0); }
 }
 
 .copy-btn {
@@ -645,9 +645,9 @@ button {
 }
 
 .copy-btn.copied {
-    background: #DCFCE7;
-    border-color: #86EFAC;
-    color: #15803D;
+    background: #E2E8F0;
+    border-color: #CBD5E1;
+    color: #334155;
 }
 
 /* ==========================================================================
@@ -817,13 +817,13 @@ button {
 }
 
 .status-badge.success {
-    background: #DCFCE7;
-    color: #15803D;
+    background: #E2E8F0;
+    color: #334155;
 }
 
 .status-badge.info {
-    background: #DBEAFE;
-    color: #1E40AF;
+    background: #E2E8F0;
+    color: #1E293B;
 }
 
 /* ==========================================================================
@@ -879,19 +879,19 @@ button {
     line-height: 1.7;
 }
 
-.code-keyword { color: #F43F5E; font-weight: 600; }
-.code-function { color: #38BDF8; }
-.code-string { color: #34D399; }
+.code-keyword { color: #FF4D63; font-weight: 600; }
+.code-function { color: #64748B; }
+.code-string { color: #64748B; }
 .code-comment { color: #64748B; font-style: italic; }
-.code-number { color: #FBBF24; }
+.code-number { color: #FF4D63; }
 
 /* ==========================================================================
    DISCLAIMER & LEGAL CALLOUT
    ========================================================================== */
 .disclaimer-card {
-    background: #FFFBEB;
-    border: 1px solid #FDE68A;
-    border-left: 5px solid #F59E0B;
+    background: #F1F5F9;
+    border: 1px solid #FFC2C6;
+    border-left: 5px solid #B80016;
     border-radius: var(--radius-lg);
     padding: 24px 28px;
     display: flex;
@@ -901,7 +901,7 @@ button {
 }
 
 .disclaimer-icon {
-    color: #D97706;
+    color: #A30014;
     flex-shrink: 0;
 }
 
@@ -913,13 +913,13 @@ button {
 .disclaimer-content h4 {
     font-size: 1.1rem;
     font-weight: 700;
-    color: #92400E;
+    color: #7A0010;
     margin-bottom: 6px;
 }
 
 .disclaimer-content p {
     font-size: 0.95rem;
-    color: #B45309;
+    color: #8A0011;
     line-height: 1.6;
 }
 
@@ -1228,13 +1228,13 @@ button {
 
 [data-theme="dark"] .disclaimer-card {
     background: #1C1917;
-    border-color: #78350F;
+    border-color: #5C000C;
 }
 
 [data-theme="dark"] .disclaimer-content h4 {
-    color: #FBBF24;
+    color: #FF4D63;
 }
 
 [data-theme="dark"] .disclaimer-content p {
-    color: #FDE68A;
+    color: #FFC2C6;
 }

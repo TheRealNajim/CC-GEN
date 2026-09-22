@@ -1,17 +1,17 @@
 /* ==========================================================================
-   CC-GEN BILLING — PRICING & SUBSCRIPTION SUCCESS PAGES
+   CC-GEN BILLING â€” PRICING & SUBSCRIPTION SUCCESS PAGES
    Shared stylesheet for pricing.html and billing-success.html.
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-    --primary-gradient: linear-gradient(135deg, #EB001B 0%, #F79E1B 100%);
-    --primary-gradient-hover: linear-gradient(135deg, #d30018 0%, #e08b12 100%);
+    --primary-gradient: linear-gradient(135deg, #EB001B 0%, #B80016 100%);
+    --primary-gradient-hover: linear-gradient(135deg, #C40017 0%, #C40017 100%);
     --primary-color: #EB001B;
-    --accent-orange: #F79E1B;
-    --accent-green: #10B981;
-    --accent-green-dark: #059669;
+    --accent-orange: #B80016;
+    --accent-green: #475569;
+    --accent-green-dark: #334155;
 
     --bg-page: #F8FAFC;
     --bg-surface: #FFFFFF;
@@ -349,7 +349,7 @@ button { cursor: pointer; border: none; }
 
 .plan-flag.save-flag {
     background: var(--accent-green);
-    box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.35);
+    box-shadow: 0 10px 30px -5px rgba(71, 85, 105, 0.35);
 }
 
 .plan-name {

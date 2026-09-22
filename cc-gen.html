@@ -190,12 +190,12 @@
                         <div class="customizer-form-group">
                             <label class="customizer-label">Card Theme Color</label>
                             <div class="theme-swatch-list">
-                                <div class="theme-swatch active" style="background: linear-gradient(135deg, #F97316, #C2410C);" title="Sunset Orange" onclick="setStudioTheme('theme-orange', this)"></div>
+                                <div class="theme-swatch active" style="background: linear-gradient(135deg, #B80016, #8A0011);" title="Sunset Orange" onclick="setStudioTheme('theme-orange', this)"></div>
                                 <div class="theme-swatch" style="background: linear-gradient(135deg, #1E293B, #020617);" title="Midnight Obsidian" onclick="setStudioTheme('theme-obsidian', this)"></div>
-                                <div class="theme-swatch" style="background: linear-gradient(135deg, #6366F1, #312E81);" title="Electric Indigo" onclick="setStudioTheme('theme-indigo', this)"></div>
-                                <div class="theme-swatch" style="background: linear-gradient(135deg, #059669, #064E3B);" title="Emerald Forest" onclick="setStudioTheme('theme-emerald', this)"></div>
-                                <div class="theme-swatch" style="background: linear-gradient(135deg, #F43F5E, #881337);" title="Rose Gold" onclick="setStudioTheme('theme-rosegold', this)"></div>
-                                <div class="theme-swatch" style="background: linear-gradient(135deg, #06B6D4, #8B5CF6);" title="Cyber Hologram" onclick="setStudioTheme('theme-cyber', this)"></div>
+                                <div class="theme-swatch" style="background: linear-gradient(135deg, #475569, #1E293B);" title="Electric Indigo" onclick="setStudioTheme('theme-indigo', this)"></div>
+                                <div class="theme-swatch" style="background: linear-gradient(135deg, #334155, #0F172A);" title="Emerald Forest" onclick="setStudioTheme('theme-emerald', this)"></div>
+                                <div class="theme-swatch" style="background: linear-gradient(135deg, #FF4D63, #7A0010);" title="Rose Gold" onclick="setStudioTheme('theme-rosegold', this)"></div>
+                                <div class="theme-swatch" style="background: linear-gradient(135deg, #475569, #475569);" title="Cyber Hologram" onclick="setStudioTheme('theme-cyber', this)"></div>
                             </div>
                         </div>
 
@@ -410,7 +410,7 @@
                 <div class="bulk-box-wrapper">
                     <div class="bulk-header-row">
                         <h2>Bulk Test Card Generator &amp; Exporter <span class="pro-badge-chip" id="bulkProBadge" style="display: none;">PRO</span></h2>
-                        <p>Generate batches of mathematically valid dummy cards and instantly download test fixtures. Free plan covers batches up to 10 cards — <a href="pricing.html" style="color: var(--primary-color); font-weight: 600;">Pro</a> unlocks 500.</p>
+                        <p>Generate batches of mathematically valid dummy cards and instantly download test fixtures. Free plan covers batches up to 10 cards â€” <a href="pricing.html" style="color: var(--primary-color); font-weight: 600;">Pro</a> unlocks 500.</p>
                     </div>
 
                     <div class="bulk-form-grid">
@@ -418,9 +418,9 @@
                             <label for="bulk-qty">Card Quantity</label>
                             <select id="bulk-qty" class="bulk-input-field">
                                 <option value="10">10 Cards (Free Batch)</option>
-                                <option value="50" selected>50 Cards (Standard Test) — PRO</option>
-                                <option value="100">100 Cards (CI/CD Suite) — PRO</option>
-                                <option value="500">500 Cards (Stress Testing) — PRO</option>
+                                <option value="50" selected>50 Cards (Standard Test) â€” PRO</option>
+                                <option value="100">100 Cards (CI/CD Suite) â€” PRO</option>
+                                <option value="500">500 Cards (Stress Testing) â€” PRO</option>
                             </select>
                         </div>
 
@@ -484,7 +484,7 @@
                     </svg>
                 </div>
                 <p style="font-size: 0.95rem; color: var(--text-body); margin-bottom: 6px;"><strong>Bulk exports above 10 cards</strong> are part of CC-GEN Pro.</p>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 18px;">Unlock batches of up to 500 Luhn-validated cards with JSON, CSV, XML &amp; SQL exports — starting at $3/month, cancel anytime.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 18px;">Unlock batches of up to 500 Luhn-validated cards with JSON, CSV, XML &amp; SQL exports â€” starting at $3/month, cancel anytime.</p>
                 <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
                     <button class="btn-secondary" onclick="closeProUpsell()">Not Now</button>
                     <a href="pricing.html" class="btn-primary" style="padding: 12px 24px; text-decoration: none;">See Pro Plans</a>
@@ -511,7 +511,7 @@
     aspect-ratio: 1.586 / 1;
     border-radius: 18px;
     padding: 24px 28px;
-    background: linear-gradient(135deg, #F97316 0%, #EA580C 50%, #C2410C 100%);
+    background: linear-gradient(135deg, #B80016 0%, #A30014 50%, #8A0011 100%);
     color: #FFFFFF;
     box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.3);
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -842,7 +842,7 @@
             navigator.clipboard.writeText(raw).then(() => {
                 const label = document.getElementById('studio-copy-label');
                 const btn = document.getElementById('studio-copy-btn');
-                btn.style.background = '#15803D';
+                btn.style.background = '#334155';
                 label.textContent = 'Copied!';
                 setTimeout(() => {
                     btn.style.background = '';

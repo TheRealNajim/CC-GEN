@@ -1,5 +1,5 @@
 /* ==========================================================================
-   CC-GEN SESSION-AWARE NAV — ACCOUNT CHIP
+   CC-GEN SESSION-AWARE NAV â€” ACCOUNT CHIP
    Shown in the site header when the visitor is signed in.
    Loaded together with auth-nav.js on every standard-header page.
    ========================================================================== */
@@ -33,7 +33,7 @@
     width: 30px;
     height: 30px;
     border-radius: 9999px;
-    background: linear-gradient(135deg, #EB001B 0%, #F79E1B 100%);
+    background: linear-gradient(135deg, #EB001B 0%, #B80016 100%);
     color: #FFFFFF;
     font-size: 0.72rem;
     font-weight: 800;
@@ -61,7 +61,7 @@
 
 .nav-account-pro {
     flex-shrink: 0;
-    background: linear-gradient(135deg, #EB001B 0%, #F79E1B 100%);
+    background: linear-gradient(135deg, #EB001B 0%, #B80016 100%);
     color: #FFFFFF;
     font-size: 0.56rem;
     font-weight: 800;
@@ -93,7 +93,7 @@
 }
 
 [data-theme="dark"] .nav-account-chip:hover {
-    border-color: #F79E1B;
+    border-color: #B80016;
 }
 
 [data-theme="dark"] .nav-signout-link {
@@ -101,11 +101,11 @@
 }
 
 [data-theme="dark"] .nav-signout-link:hover {
-    color: #F79E1B;
+    color: #B80016;
 }
 
 /* Inside the mobile menu, make the chip and sign-out comfortable tap targets.
-   (Visibility/display is owned by each page's own responsive CSS —
+   (Visibility/display is owned by each page's own responsive CSS â€”
    do NOT set display here or the buttons leak onto the desktop header.) */
 .mobile-nav-auth .nav-account-chip {
     width: 100%;

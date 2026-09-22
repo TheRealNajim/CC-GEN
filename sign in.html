@@ -420,14 +420,14 @@
                 });
                 const data = await res.json().catch(() => ({}));
                 status.textContent = (res.ok && data.message) || 'If an account exists for that email, a reset link is on its way.';
-                status.style.color = '#10B981';
+                status.style.color = '#475569';
             } catch (err) {
                 status.textContent = 'Could not send the reset email right now. Please try again.';
                 status.style.color = 'var(--primary-color)';
             }
         }
 
-        // Social OAuth (Google / GitHub) — serverless handlers live at /api/auth/*
+        // Social OAuth (Google / GitHub) â€” serverless handlers live at /api/auth/*
         function startSocialAuth(provider) {
             window.location.href = '/api/auth/' + provider;
         }

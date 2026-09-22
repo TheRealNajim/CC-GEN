@@ -5,13 +5,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap');
 
 :root {
-    --primary-gradient: linear-gradient(135deg, #EB001B 0%, #F79E1B 100%);
-    --primary-gradient-hover: linear-gradient(135deg, #d30018 0%, #e08b12 100%);
+    --primary-gradient: linear-gradient(135deg, #EB001B 0%, #B80016 100%);
+    --primary-gradient-hover: linear-gradient(135deg, #C40017 0%, #C40017 100%);
     --primary-color: #EB001B;
-    --accent-orange: #F79E1B;
-    --accent-blue: #3B82F6;
-    --accent-purple: #8B5CF6;
-    --accent-emerald: #10B981;
+    --accent-orange: #B80016;
+    --accent-blue: #475569;
+    --accent-purple: #475569;
+    --accent-emerald: #475569;
     
     --bg-page: #F8FAFC;
     --bg-surface: #FFFFFF;
@@ -157,7 +157,7 @@ button {
 }
 
 .top-faq-link {
-    color: #FDBA74;
+    color: #FFC2C6;
     font-weight: 700;
     display: inline-flex;
     align-items: center;
@@ -361,7 +361,7 @@ button {
    ========================================================================== */
 .studio-hero-section {
     padding: 56px 0 72px;
-    background: radial-gradient(circle at 85% 20%, rgba(247, 158, 27, 0.1) 0%, transparent 50%),
+    background: radial-gradient(circle at 85% 20%, rgba(235, 0, 27, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 15% 80%, rgba(235, 0, 27, 0.07) 0%, transparent 45%);
     border-bottom: 1px solid var(--border-color);
 }
@@ -516,12 +516,12 @@ button {
 }
 
 /* Themes */
-.theme-orange { background: linear-gradient(135deg, #F97316 0%, #EA580C 50%, #C2410C 100%); }
+.theme-orange { background: linear-gradient(135deg, #B80016 0%, #A30014 50%, #8A0011 100%); }
 .theme-obsidian { background: linear-gradient(135deg, #1E293B 0%, #0F172A 60%, #020617 100%); }
-.theme-indigo { background: linear-gradient(135deg, #6366F1 0%, #4F46E5 60%, #312E81 100%); }
-.theme-emerald { background: linear-gradient(135deg, #059669 0%, #047857 60%, #064E3B 100%); }
-.theme-rosegold { background: linear-gradient(135deg, #F43F5E 0%, #BE123C 60%, #881337 100%); }
-.theme-cyber { background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 50%, #8B5CF6 100%); }
+.theme-indigo { background: linear-gradient(135deg, #475569 0%, #334155 60%, #1E293B 100%); }
+.theme-emerald { background: linear-gradient(135deg, #334155 0%, #1E293B 60%, #0F172A 100%); }
+.theme-rosegold { background: linear-gradient(135deg, #FF4D63 0%, #C40017 60%, #7A0010 100%); }
+.theme-cyber { background: linear-gradient(135deg, #475569 0%, #475569 50%, #475569 100%); }
 
 .card-overlay-mesh {
     position: absolute;
@@ -554,7 +554,7 @@ button {
 .card-chip-element {
     width: 44px;
     height: 32px;
-    background: linear-gradient(135deg, #FDE047 0%, #CA8A04 100%);
+    background: linear-gradient(135deg, #FF4D63 0%, #8A0011 100%);
     border-radius: 6px;
     position: relative;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -1431,7 +1431,7 @@ button {
 [data-theme="dark"] .load-studio-btn,
 [data-theme="dark"] .gallery-card-actions .btn-link {
     background: rgba(235, 0, 27, 0.18);
-    color: #FFA39E !important;
+    color: #FFC2C6 !important;
     border: 1px solid rgba(235, 0, 27, 0.4);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
