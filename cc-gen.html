@@ -411,7 +411,12 @@
                 <div class="bulk-box-wrapper">
                     <div class="bulk-header-row">
                         <h2>Bulk Test Card Generator &amp; Exporter <span class="pro-badge-chip" id="bulkProBadge" style="display: none;">PRO</span></h2>
-                        <p>Generate batches of mathematically valid dummy cards and instantly download test fixtures. Free plan covers batches up to 10 cards Ã¢â‚¬â€ <a href="pricing.html" style="color: var(--primary-color); font-weight: 600;">Pro</a> unlocks 500.</p>
+                        <p>Generate batches of mathematically valid dummy cards and instantly download test fixtures. Free plan covers batches up to 10 cards — <a href="pricing.html" style="color: var(--primary-color); font-weight: 600;">Pro</a> unlocks 500.</p>
+                        <div class="bulk-sample-chip" title="Live Luhn-validated sample from your current settings">
+                            <span class="bulk-sample-label">Live Sample</span>
+                            <span class="bulk-sample-number" id="bulkSampleNumber">···· ···· ···· ····</span>
+                            <span class="bulk-sample-valid"><span class="bulk-sample-dot"></span>Luhn valid</span>
+                        </div>
                     </div>
 
                     <div class="bulk-form-grid">
@@ -419,9 +424,9 @@
                             <label for="bulk-qty">Card Quantity</label>
                             <select id="bulk-qty" class="bulk-input-field">
                                 <option value="10">10 Cards (Free Batch)</option>
-                                <option value="50" selected>50 Cards (Standard Test) Ã¢â‚¬â€ PRO</option>
-                                <option value="100">100 Cards (CI/CD Suite) Ã¢â‚¬â€ PRO</option>
-                                <option value="500">500 Cards (Stress Testing) Ã¢â‚¬â€ PRO</option>
+                                <option value="50" selected>50 Cards (Standard Test) — PRO</option>
+                                <option value="100">100 Cards (CI/CD Suite) — PRO</option>
+                                <option value="500">500 Cards (Stress Testing) — PRO</option>
                             </select>
                         </div>
 
@@ -452,16 +457,37 @@
                         </div>
                     </div>
 
-                    <div class="bulk-action-center">
-                        <button class="btn-primary" style="padding: 14px 32px; font-size: 1rem;" onclick="generateAndDownloadBulk()">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <div class="bulk-summary-row" id="bulkSummaryRow" aria-live="polite">
+                        <span class="bulk-summary-chip" id="bulkSumQty"><b>50</b>&nbsp;cards</span>
+                        <span class="bulk-summary-chip" id="bulkSumBrand">Mixed networks</span>
+                        <span class="bulk-summary-chip" id="bulkSumFormat">JSON file</span>
+                    </div>
+
+                    <div class="bulk-action-center" id="bulkActionCenter">
+                        <div class="bulk-burst-layer" id="bulkBurstLayer"></div>
+                        <button class="btn-primary bulk-generate-btn" id="bulkGenerateBtn" onclick="generateAndDownloadBulk()">
+                            <svg class="bulk-btn-icon bulk-icon-download" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                                 <polyline points="7 10 12 15 17 10"></polyline>
                                 <line x1="12" y1="15" x2="12" y2="3"></line>
                             </svg>
-                            <span>Generate & Download Test Fixture</span>
+                            <svg class="bulk-btn-icon bulk-icon-spinner" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                                <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+                            </svg>
+                            <svg class="bulk-btn-icon bulk-icon-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span id="bulkBtnLabel">Generate &amp; Download Test Fixture</span>
                         </button>
                     </div>
+
+                    <div class="bulk-progress-track" id="bulkProgressTrack">
+                        <div class="bulk-progress-fill" id="bulkProgressFill"></div>
+                    </div>
+
+                    <div class="bulk-mini-cards" id="bulkMiniCards" aria-live="polite"></div>
+
+                    <div class="bulk-toast" id="bulkToast" role="status"></div>
                 </div>
             </div>
         </section>
@@ -485,7 +511,7 @@
                     </svg>
                 </div>
                 <p style="font-size: 0.95rem; color: var(--text-body); margin-bottom: 6px;"><strong>Bulk exports above 10 cards</strong> are part of CC-GEN Pro.</p>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 18px;">Unlock batches of up to 500 Luhn-validated cards with JSON, CSV, XML &amp; SQL exports Ã¢â‚¬â€ starting at $3/month, cancel anytime.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 18px;">Unlock batches of up to 500 Luhn-validated cards with JSON, CSV, XML &amp; SQL exports — starting at $3/month, cancel anytime.</p>
                 <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
                     <button class="btn-secondary" onclick="closeProUpsell()">Not Now</button>
                     <a href="pricing.html" class="btn-primary" style="padding: 12px 24px; text-decoration: none;">See Pro Plans</a>
@@ -969,52 +995,236 @@
             return null;
         }
 
+        // ------------------------------------------------------------------
+        // Satisfying bulk-section interactions
+        // ------------------------------------------------------------------
+        const BULK_BRAND_LABELS = {
+            mixed: 'Mixed networks',
+            visa: 'Visa · 4xxx',
+            mastercard: 'Mastercard · 5xxx',
+            amex: 'Amex · 37xx',
+            discover: 'Discover · 6011'
+        };
+        const BULK_FORMAT_LABELS = { json: 'JSON file', csv: 'CSV file', xml: 'XML file', sql: 'SQL seed' };
+        const bulkWait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+        function bulkFormatNumber(raw, brand) {
+            if (brand === 'amex') return `${raw.slice(0,4)} ${raw.slice(4,10)} ${raw.slice(10)}`;
+            return raw.match(/.{1,4}/g).join(' ');
+        }
+
+        function bulkSampleFor(brand) {
+            let chosen = brand;
+            if (brand === 'mixed') {
+                const keys = ['visa', 'mastercard', 'amex', 'discover'];
+                chosen = keys[Math.floor(Math.random() * keys.length)];
+            }
+            const card = buildCardObject(1, chosen, 'SAMPLE');
+            return { text: bulkFormatNumber(card.cardNumber, chosen), network: card.network };
+        }
+
+        let bulkSampleRAF = null;
+        function animateBulkSample() {
+            const el = document.getElementById('bulkSampleNumber');
+            const { text } = bulkSampleFor(document.getElementById('bulk-brand').value);
+            if (bulkSampleRAF) cancelAnimationFrame(bulkSampleRAF);
+            const start = performance.now();
+            const duration = 620;
+            function frame(t) {
+                const p = Math.min(1, (t - start) / duration);
+                const reveal = Math.floor(p * text.length);
+                let out = '';
+                for (let i = 0; i < text.length; i++) {
+                    out += (i < reveal || text[i] === ' ') ? text[i] : String(Math.floor(Math.random() * 10));
+                }
+                el.textContent = out;
+                if (p < 1) bulkSampleRAF = requestAnimationFrame(frame);
+            }
+            bulkSampleRAF = requestAnimationFrame(frame);
+        }
+
+        function bulkCountUp(el, target) {
+            const from = parseInt(el.textContent.replace(/\D/g, ''), 10) || 0;
+            if (from === target) { el.textContent = target; return; }
+            const start = performance.now();
+            const duration = 380;
+            function frame(t) {
+                const p = Math.min(1, (t - start) / duration);
+                const eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = Math.round(from + (target - from) * eased);
+                if (p < 1) requestAnimationFrame(frame);
+            }
+            requestAnimationFrame(frame);
+        }
+
+        function bulkPop(el) {
+            el.classList.remove('bulk-pop');
+            void el.offsetWidth;
+            el.classList.add('bulk-pop');
+        }
+
+        function updateBulkSummary(pop) {
+            const qtyEl = document.getElementById('bulk-qty');
+            const brandEl = document.getElementById('bulk-brand');
+            const formatEl = document.getElementById('bulk-format');
+            bulkCountUp(document.getElementById('bulkSumQty').querySelector('b'), parseInt(qtyEl.value, 10));
+            document.getElementById('bulkSumBrand').textContent = BULK_BRAND_LABELS[brandEl.value];
+            document.getElementById('bulkSumFormat').textContent = BULK_FORMAT_LABELS[formatEl.value];
+            if (pop) {
+                ['bulkSumQty', 'bulkSumBrand', 'bulkSumFormat'].forEach((id) => bulkPop(document.getElementById(id)));
+            }
+            animateBulkSample();
+        }
+
+        function setBulkButtonState(state, text) {
+            const btn = document.getElementById('bulkGenerateBtn');
+            btn.classList.remove('is-loading', 'is-success');
+            if (state) btn.classList.add(state);
+            btn.disabled = Boolean(state);
+            document.getElementById('bulkBtnLabel').textContent = text;
+        }
+
+        function bulkProgressTo(percent, fast) {
+            const fill = document.getElementById('bulkProgressFill');
+            fill.style.transition = fast ? 'width .4s cubic-bezier(0.4, 0, 0.2, 1)' : 'width 1.5s cubic-bezier(0.25, 0.6, 0.3, 1)';
+            fill.style.width = percent + '%';
+        }
+
+        function spawnBulkBurst() {
+            const layer = document.getElementById('bulkBurstLayer');
+            layer.innerHTML = '';
+            const colors = ['#EB001B', '#FFFFFF', '#94A3B8', '#FF4D63'];
+            const total = 16;
+            for (let i = 0; i < total; i++) {
+                const angle = (i / total) * Math.PI * 2 + Math.random() * 0.5;
+                const dist = 52 + Math.random() * 46;
+                const p = document.createElement('i');
+                p.className = 'bulk-burst-particle';
+                p.style.setProperty('--tx', `${Math.cos(angle) * dist}px`);
+                p.style.setProperty('--ty', `${Math.sin(angle) * dist}px`);
+                p.style.background = colors[i % colors.length];
+                p.style.animationDelay = `${i * 8}ms`;
+                layer.appendChild(p);
+            }
+            setTimeout(() => { layer.innerHTML = ''; }, 1000);
+        }
+
+        function spawnBulkMiniCards(cards, qty) {
+            const wrap = document.getElementById('bulkMiniCards');
+            wrap.innerHTML = '';
+            const shown = cards.slice(0, 8);
+            shown.forEach((card, i) => {
+                const chip = document.createElement('span');
+                chip.className = 'bulk-mini-card';
+                chip.style.setProperty('--d', `${i * 75}ms`);
+                chip.innerHTML = `<b>${card.network}</b><span>••&nbsp;${card.cardNumber.slice(-4)}</span>`;
+                wrap.appendChild(chip);
+            });
+            if (qty > shown.length) {
+                const more = document.createElement('span');
+                more.className = 'bulk-mini-card bulk-mini-more';
+                more.style.setProperty('--d', `${shown.length * 75}ms`);
+                more.textContent = `+${qty - shown.length} more`;
+                wrap.appendChild(more);
+            }
+            wrap.classList.add('show');
+        }
+
+        let bulkToastTimer = null;
+        function showBulkToast(message) {
+            const toast = document.getElementById('bulkToast');
+            toast.textContent = `✓ ${message}`;
+            toast.classList.add('show');
+            clearTimeout(bulkToastTimer);
+            bulkToastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
+        }
+
         async function generateAndDownloadBulk() {
+            if (document.getElementById('bulkGenerateBtn').disabled) return;
             const qty = parseInt(document.getElementById('bulk-qty').value, 10);
             const brand = document.getElementById('bulk-brand').value;
             const format = document.getElementById('bulk-format').value;
             const persona = document.getElementById('bulk-persona').value || 'USER';
 
+            document.getElementById('bulkMiniCards').classList.remove('show');
+            document.getElementById('bulkMiniCards').innerHTML = '';
+            document.getElementById('bulkProgressTrack').classList.add('active');
+            setBulkButtonState('is-loading', `Generating ${qty} cards…`);
+            bulkProgressTo(4, true);
+            requestAnimationFrame(() => bulkProgressTo(84, false));
+
+            const t0 = performance.now();
             let cards;
-            if (qty > FREE_BULK_LIMIT) {
-                cards = await fetchProCards(qty, brand, persona);
-                if (!cards) return; // Upsell shown or fetch failed.
-            } else {
-                cards = generateClientSide(qty, brand, persona);
+            try {
+                if (qty > FREE_BULK_LIMIT) {
+                    cards = await fetchProCards(qty, brand, persona);
+                    if (!cards) return; // Upsell shown or fetch failed.
+                } else {
+                    cards = generateClientSide(qty, brand, persona);
+                }
+
+                let fileContent = '';
+                let mimeType = 'text/plain';
+                let filename = `cc_gen_test_cards_${qty}.${format}`;
+
+                if (format === 'json') {
+                    fileContent = JSON.stringify(cards, null, 2);
+                    mimeType = 'application/json';
+                } else if (format === 'csv') {
+                    fileContent = 'id,cardholder,network,cardNumber,expMonth,expYear,cvv,luhnValid\n' +
+                        cards.map(c => `${c.id},"${c.cardholder}","${c.network}","${c.cardNumber}","${c.expMonth}","${c.expYear}","${c.cvv}",${c.luhnValid}`).join('\n');
+                    mimeType = 'text/csv';
+                } else if (format === 'xml') {
+                    fileContent = '<?xml version="1.0" encoding="UTF-8"?>\n<testCards>\n' +
+                        cards.map(c => `  <card id="${c.id}">\n    <cardholder>${c.cardholder}</cardholder>\n    <network>${c.network}</network>\n    <number>${c.cardNumber}</number>\n    <expMonth>${c.expMonth}</expMonth>\n    <expYear>${c.expYear}</expYear>\n    <cvv>${c.cvv}</cvv>\n  </card>`).join('\n') + '\n</testCards>';
+                    mimeType = 'application/xml';
+                } else if (format === 'sql') {
+                    fileContent = '-- CC-GEN SQL Seed Fixture\nINSERT INTO test_cards (cardholder, network, card_number, exp_month, exp_year, cvv, luhn_valid) VALUES\n' +
+                        cards.map(c => `('${c.cardholder}', '${c.network}', '${c.cardNumber}', '${c.expMonth}', '${c.expYear}', '${c.cvv}', true)`).join(',\n') + ';';
+                    mimeType = 'application/sql';
+                }
+
+                // Hold the loading beat so the progress feels intentional, not instant.
+                const elapsed = performance.now() - t0;
+                if (elapsed < 1150) await bulkWait(1150 - elapsed);
+
+                // Trigger Browser Download
+                const blob = new Blob([fileContent], { type: mimeType });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                bulkProgressTo(100, true);
+                await bulkWait(420);
+                setBulkButtonState('is-success', 'Downloaded!');
+                spawnBulkBurst();
+                spawnBulkMiniCards(cards, qty);
+                showBulkToast(`${qty}-card ${format.toUpperCase()} fixture downloaded`);
+                await bulkWait(2300);
+                setBulkButtonState(null, 'Generate & Download Test Fixture');
+                animateBulkSample();
+            } finally {
+                document.getElementById('bulkProgressTrack').classList.remove('active');
+                bulkProgressTo(0, true);
+                setBulkButtonState(null, 'Generate & Download Test Fixture');
             }
-
-            let fileContent = '';
-            let mimeType = 'text/plain';
-            let filename = `cc_gen_test_cards_${qty}.${format}`;
-
-            if (format === 'json') {
-                fileContent = JSON.stringify(cards, null, 2);
-                mimeType = 'application/json';
-            } else if (format === 'csv') {
-                fileContent = 'id,cardholder,network,cardNumber,expMonth,expYear,cvv,luhnValid\n' +
-                    cards.map(c => `${c.id},"${c.cardholder}","${c.network}","${c.cardNumber}","${c.expMonth}","${c.expYear}","${c.cvv}",${c.luhnValid}`).join('\n');
-                mimeType = 'text/csv';
-            } else if (format === 'xml') {
-                fileContent = '<?xml version="1.0" encoding="UTF-8"?>\n<testCards>\n' +
-                    cards.map(c => `  <card id="${c.id}">\n    <cardholder>${c.cardholder}</cardholder>\n    <network>${c.network}</network>\n    <number>${c.cardNumber}</number>\n    <expMonth>${c.expMonth}</expMonth>\n    <expYear>${c.expYear}</expYear>\n    <cvv>${c.cvv}</cvv>\n  </card>`).join('\n') + '\n</testCards>';
-                mimeType = 'application/xml';
-            } else if (format === 'sql') {
-                fileContent = '-- CC-GEN SQL Seed Fixture\nINSERT INTO test_cards (cardholder, network, card_number, exp_month, exp_year, cvv, luhn_valid) VALUES\n' +
-                    cards.map(c => `('${c.cardholder}', '${c.network}', '${c.cardNumber}', '${c.expMonth}', '${c.expYear}', '${c.cvv}', true)`).join(',\n') + ';';
-                mimeType = 'application/sql';
-            }
-
-            // Trigger Browser Download
-            const blob = new Blob([fileContent], { type: mimeType });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
         }
+
+        // Wire the bulk controls to live feedback
+        ['bulk-qty', 'bulk-brand', 'bulk-format'].forEach((id) => {
+            document.getElementById(id).addEventListener('change', () => updateBulkSummary(true));
+        });
+        let bulkPersonaTimer = null;
+        document.getElementById('bulk-persona').addEventListener('input', () => {
+            clearTimeout(bulkPersonaTimer);
+            bulkPersonaTimer = setTimeout(animateBulkSample, 280);
+        });
+        updateBulkSummary(false);
 
         // Modal Handlers
         function openCssModal() {
