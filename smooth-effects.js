@@ -154,11 +154,76 @@
         }
     }
 
+    // --- 5. Buttery Wheel Scrolling (fine pointers only) ---
+    // Lerps the page scroll toward the wheel target each frame, turning
+    // discrete mouse-wheel steps into an eased glide. Touch and trackpad
+    // inertia stay native; scrollable sub-areas (modals, code boxes) keep
+    // their own native scrolling.
+    function initButteryScroll() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        if (window.matchMedia('(pointer: coarse)').matches) return;
+
+        // Guarantee instant programmatic scrolls inside the lerp loop
+        // (inline !important also overrides the stylesheet's smooth behavior).
+        document.documentElement.style.setProperty('scroll-behavior', 'auto', 'important');
+
+        let target = window.pageYOffset;
+        let rafId = null;
+
+        function isWithinScrollable(el) {
+            while (el && el !== document.body) {
+                if (el.nodeType === 1) {
+                    const style = window.getComputedStyle(el);
+                    if (/(auto|scroll)/.test(style.overflowY) && el.scrollHeight > el.clientHeight + 1) {
+                        return true;
+                    }
+                }
+                el = el.parentElement;
+            }
+            return false;
+        }
+
+        function loop() {
+            const current = window.pageYOffset;
+            const delta = target - current;
+            if (Math.abs(delta) < 0.6) {
+                window.scrollTo(0, target);
+                rafId = null;
+                return;
+            }
+            window.scrollTo(0, current + delta * 0.12);
+            rafId = requestAnimationFrame(loop);
+        }
+
+        window.addEventListener('wheel', (e) => {
+            if (e.ctrlKey) return; // let pinch-zoom gestures through
+            if (isWithinScrollable(e.target)) return; // native scroll inside modals/boxes
+            e.preventDefault();
+
+            const step = e.deltaMode === 1 ? e.deltaY * 33 : e.deltaY;
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            if (rafId === null) target = window.pageYOffset; // resync after external scrolls
+            target = Math.max(0, Math.min(max, target + step));
+            if (rafId === null) rafId = requestAnimationFrame(loop);
+        }, { passive: false });
+    }
+
+    // --- 6. Lazy Media (offscreen images decode off the main thread) ---
+    function initLazyMedia() {
+        document.querySelectorAll('img').forEach((img) => {
+            if (img.closest('.site-header')) return; // keep brand logo eager
+            img.loading = 'lazy';
+            img.decoding = 'async';
+        });
+    }
+
     // Initialize all smooth interactions on DOM ready
     document.addEventListener('DOMContentLoaded', () => {
         initRipples();
         initSmoothScroll();
         initScrollReveals();
+        initLazyMedia();
+        initButteryScroll();
     });
 
     // Re-bind when dynamic DOM updates occur

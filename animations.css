@@ -110,3 +110,23 @@ select:focus,
 button:focus-visible {
     transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
+
+/* --- 6. Reduced Motion: collapse all animation for users who opt out --- */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto !important;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .scroll-reveal {
+        opacity: 1;
+        transform: none;
+    }
+}

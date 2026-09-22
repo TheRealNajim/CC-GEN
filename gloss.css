@@ -5,18 +5,38 @@
    ========================================================================== */
 
 /* --- Ambient backdrop (gives the blur something to refract) -------------- */
+/* Painted on a position:fixed pseudo-layer instead of background-attachment:
+   fixed — the fixed layer is composited once, so scrolling never repaints it. */
+html {
+    background: #F8FAFC;
+}
+
+[data-theme="dark"] html {
+    background: #090D16;
+}
+
 body {
-    background-color: var(--bg-page, #F8FAFC);
-    background-image:
-        radial-gradient(900px 480px at 88% -5%, rgba(235, 0, 27, 0.09), transparent 60%),
-        radial-gradient(720px 460px at -8% 30%, rgba(71, 85, 105, 0.10), transparent 55%),
-        radial-gradient(680px 520px at 50% 110%, rgba(235, 0, 27, 0.05), transparent 60%);
-    background-attachment: fixed;
+    background: transparent;
 }
 
 [data-theme="dark"] body {
-    background-color: var(--bg-page, #090D16);
-    background-image:
+    background: transparent;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(900px 480px at 88% -5%, rgba(235, 0, 27, 0.09), transparent 60%),
+        radial-gradient(720px 460px at -8% 30%, rgba(71, 85, 105, 0.10), transparent 55%),
+        radial-gradient(680px 520px at 50% 110%, rgba(235, 0, 27, 0.05), transparent 60%);
+}
+
+[data-theme="dark"] body::before {
+    background:
         radial-gradient(900px 480px at 88% -5%, rgba(235, 0, 27, 0.14), transparent 60%),
         radial-gradient(720px 460px at -8% 30%, rgba(71, 85, 105, 0.16), transparent 55%),
         radial-gradient(680px 520px at 50% 110%, rgba(235, 0, 27, 0.07), transparent 60%);
