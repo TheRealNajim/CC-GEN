@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cc-gen-seven.vercel.app/sitemap.xml

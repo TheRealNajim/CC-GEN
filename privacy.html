@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | CC-GEN</title>
+    <link rel="canonical" href="https://cc-gen-seven.vercel.app/privacy.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="CC-GEN">
+    <meta property="og:title" content="Privacy Policy | CC-GEN">
+    <meta property="og:description" content="How CC-GEN handles your data: account information, billing through Stripe, and the minimal local storage we use. No tracking, no card data retention.">
+    <meta property="og:url" content="https://cc-gen-seven.vercel.app/privacy.html">
+    <meta property="og:image" content="https://cc-gen-seven.vercel.app/og-cover.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Privacy Policy | CC-GEN">
+    <meta name="twitter:description" content="How CC-GEN handles your data: account information, billing through Stripe, and the minimal local storage we use. No tracking, no card data retention.">
+    <meta name="twitter:image" content="https://cc-gen-seven.vercel.app/og-cover.png">
+    <meta name="description" content="How CC-GEN handles your data: account information, billing through Stripe, and the minimal local storage we use. No tracking, no card data retention.">
+    <link rel="icon" type="image/webp" href="logo.webp">
+    <link rel="stylesheet" href="legal.css">
+    <script src="theme.js"></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="brand-wrapper">
+                <img src="logo.webp" alt="CC-GEN Logo" width="120" height="97">
+                <span>CC-GEN</span>
+            </a>
+            <div class="header-actions">
+                <button class="theme-toggle-btn" aria-label="Toggle Dark/Light Theme"></button>
+                <a href="index.html" class="btn-back">Back to Home</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="legal-main">
+        <div class="container">
+            <div class="legal-header">
+                <span class="legal-badge">Legal</span>
+                <h1>Privacy Policy</h1>
+                <p class="legal-updated">Last updated: September 2026</p>
+            </div>
+
+            <div class="legal-card">
+                <h2>1. Overview</h2>
+                <p>CC-GEN is a developer tool that generates mathematically valid <strong>dummy</strong> credit card numbers for software testing. We collect the minimum amount of information needed to run accounts and optional Pro subscriptions — and nothing more.</p>
+
+                <h2>2. What we collect</h2>
+                <ul>
+                    <li><strong>Account data:</strong> your email address and a hashed password when you register with email, or the email associated with your Google or GitHub account when you use OAuth sign-in. Authentication is handled by Firebase Authentication.</li>
+                    <li><strong>Session data:</strong> a signed, HttpOnly cookie that keeps you signed in. It contains no personal data beyond an identifier.</li>
+                    <li><strong>Billing data (Pro only):</strong> payments are processed entirely by Stripe. We never see or store your card number, expiry, or CVV. We store only your Stripe customer ID and subscription status.</li>
+                    <li><strong>Preferences:</strong> your light/dark theme choice is saved in your browser's local storage on your device only.</li>
+                </ul>
+
+                <h2>3. What we never collect</h2>
+                <ul>
+                    <li>We do not use advertising or analytics trackers.</li>
+                    <li>We do not store the dummy card numbers you generate — client-side batches never leave your browser, and server-generated batches are returned to you and not retained.</li>
+                    <li>We do not sell or share personal data with third parties.</li>
+                </ul>
+
+                <h2>4. Third parties</h2>
+                <p>We rely on three processors: <strong>Firebase</strong> (authentication), <strong>Stripe</strong> (payments), and <strong>Vercel</strong> (hosting and serverless functions). Each processes data under its own privacy policy.</p>
+
+                <h2>5. Your choices</h2>
+                <p>You can delete your account at any time by contacting us, which removes your authentication record and subscription linkage. You can also clear the theme preference from your browser's local storage at any time.</p>
+
+                <h2>6. Contact</h2>
+                <p>Questions about this policy? Reach us via the <a href="faq.html#contact-support">support section in our FAQ</a> or email <a href="mailto:najimdeenajadi@gmail.com">najimdeenajadi@gmail.com</a>.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <span>© 2026 CC-GEN. All rights reserved.</span>
+            <span>
+                <a href="terms.html">Terms &amp; Conditions</a> &nbsp;•&nbsp;
+                <a href="faq.html">FAQs</a>
+            </span>
+        </div>
+    </footer>
+
+    <script src="transitions.js"></script>
+    <script src="smooth-effects.js"></script>
+</body>
+</html>
